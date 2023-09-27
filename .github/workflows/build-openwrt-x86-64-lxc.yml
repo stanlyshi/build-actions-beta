@@ -71,15 +71,16 @@ env:
 
 jobs:
   build:
+    name: 编译 "${{matrix.target}}"
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-
-    name: 启动${{matrix.target}}编译
+    env:
+      MATRIX_TARGET=${{matrix.target}}
     strategy:
       fail-fast: false
       matrix:
         target: [Lede_lxc]
-
+        
         # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
 
     steps:
@@ -89,7 +90,8 @@ jobs:
     - name: 读取脚本设置
       run: |
         cd ${GITHUB_WORKSPACE}
-
+ 
+        source "build/${{matrix.target}}/settings.ini"
         wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
         source ./common.sh && parse_settings
         rm -rf ./common.sh
