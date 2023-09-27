@@ -89,7 +89,7 @@ jobs:
     - name: 读取脚本设置
       run: |
         cd ${GITHUB_WORKSPACE}
-        wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh) && chmod +x ./common.sh
+        wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
         source ./common.sh && parse_settings
         rm -rf ./common.sh
 
