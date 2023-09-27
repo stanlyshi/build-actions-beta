@@ -1,0 +1,179 @@
+#=================================================
+# https://github.com/roacn/build-actions
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: GNU General Public License v3.0
+# Author: Ss.
+#=================================================
+
+name: 触发x86-64-lxc
+on:
+  workflow_dispatch:
+    inputs:
+      NOTICE_TYPE:
+        description: 'Telegram或pushplus信息通知'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'Telegram'
+          - 'Pushplus'
+          - 'Wechat'
+      ENABLE_SSH:
+        description: 'SSH远程配置固件'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_BIN_DIR:
+        description: '上传bin文件夹到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      UPLOAD_FIRMWARE:
+        description: '上传固件到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      ENABLE_CACHEWRTBUILD:
+        description: '缓存加速编译'
+        required: false
+        default: 'true'
+        type: boolean
+      RETAIN_DAYS:
+        description: '清理[X]天之前的Actions空间操作记录(可改)'
+        required: false
+        default: '7'
+      KEEP_LASTEST:
+        description: '保留[X]个Releases不被删除(可改)'
+        required: false
+        default: '6'
+
+
+# 定时触发开启开始编译(把下面两个#去掉开启,时间设置请看定时开启编译说明)
+  #schedule:
+   #- cron: 21 0 * * 5
+
+# 注意：为保证触发正常，请修改BUILD_YML、COMPILE_YML、EVENT_TYPE，
+# 其中前2个为文件名；
+# 第3个为自定义事件类型，保证在上面2个文件内定义一致，但要避免与其它文件内重复。
+env:
+  BUILD_YML: build-openwrt-x86-64-lxc.yml
+  COMPILE_YML: compile-x86-64-lxc.yml
+  EVENT_TYPE: 编译x86-64-lxc固件
+  GITHUB_REPO_URL: https://github.com/${{github.repository}}
+  GITHUB_ACTOR: ${{github.actor}}
+  GITHUB_REPOSITORY: ${{github.repository}}
+  GITHUB_WORKFLOW: ${{github.workflow}}
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+
+    name: 启动${{matrix.target}}编译
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Lede_lxc]
+
+        # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
+
+    steps:
+    - name: 准备结束
+      uses: actions/checkout@v3
+
+    - name: 读取脚本设置
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        bash <(curl -fsSL https://raw.githubusercontent.com/stanlyshi/common/main/common.sh) && parse_settings
+
+    - name: 部署编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        source ${COMMON_PATH}/common.sh && init_environment
+
+    - name: 下载"${{matrix.target}}"源码
+      working-directory: /${{matrix.target}}
+      run: |
+        source ${COMMON_PATH}/common.sh && git_clone_source
+
+    - name: 加载源,补丁和自定义设置
+      run: |
+        source ${COMMON_PATH}/common.sh && do_diy
+
+    - name: SSH远程连接（制作.config配置文件）
+      if: ${{ github.event.inputs.ENABLE_SSH }} == 'true'
+      uses: danshui-git/debugger-action@main
+      env:
+        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: 生成"${{matrix.target}}"配置文件
+      id: compileop
+      run: |
+        source ${COMMON_PATH}/common.sh && make_defconfig
+
+    - name: 上传.config配置文件至artifacts
+      if: env.UPLOAD_CONFIG == 'true'
+      uses: actions/upload-artifact@v3
+      with:
+        name: .config_${{ env.SOURCE_ABBR }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
+        path: config.txt
+
+    - name: 整理REPO
+      continue-on-error: true
+      if: ${{ env.REPO_TOKEN }}
+      run: |
+        source ${COMMON_PATH}/common.sh && update_repo
+
+    - name: 编译信息
+      continue-on-error: true
+      run: |
+        source ${COMMON_PATH}/common.sh && compile_info
+
+  compile-dispatch:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    steps:
+    - name: 触发yml启动"${{matrix.target}}"编译
+      continue-on-error: true
+      run: |
+        curl \
+        -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
+        -H "Accept: application/vnd.github.everest-preview+json" \
+        -H "Authorization: token ${{ secrets.REPO_TOKEN }}" \
+        -d '{"event_type": "${{ env.EVENT_TYPE }}"}'
+        
+  delete-releases-artifacts:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+    steps:
+    - name: 读取设置
+      run: |
+        [ ${{ github.event.inputs.KEEP_LASTEST }} ] && echo "KEEP_LASTEST=${{ github.event.inputs.KEEP_LASTEST }}" >> $GITHUB_ENV || echo "KEEP_LASTEST=6" >> $GITHUB_ENV
+        [ ${{ github.event.inputs.ACTION_DAYS }} ] && echo "RETAIN_DAYS=${{ github.event.inputs.ACTION_DAYS }}" >> $GITHUB_ENV || echo "RETAIN_DAYS=7" >> $GITHUB_ENV
+        
+    - name: 清理Actions空间
+      if: ${{ env.REPO_TOKEN }}
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+          token: ${{ secrets.REPO_TOKEN }}
+          repository: ${{ github.repository }}
+          keep_minimum_runs: 0
+          retain_days: ${{ env.RETAIN_DAYS }}
+    
+    - name: 删除releases
+      if: ${{ env.REPO_TOKEN }}
+      uses: roacn/delete-older-releases@master
+      with:
+        repo: ${{ github.repository }}
+        keep_latest: ${{ env.KEEP_LASTEST }}
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
