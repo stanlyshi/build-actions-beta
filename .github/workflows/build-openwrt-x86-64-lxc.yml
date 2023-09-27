@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
     env:
-      MATRIX_TARGET=${{matrix.target}}
+      MATRIX_TARGET: ${{matrix.target}}
     strategy:
       fail-fast: false
       matrix:
@@ -83,6 +83,13 @@ jobs:
         
         # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
 
+    env:
+      FOLDER_NAME: ${{ matrix.target }}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Lede_lxc]
+        
     steps:
     - name: 准备结束
       uses: actions/checkout@v3
