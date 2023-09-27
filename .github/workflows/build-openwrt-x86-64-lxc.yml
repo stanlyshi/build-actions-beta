@@ -89,6 +89,7 @@ jobs:
     - name: 读取脚本设置
       run: |
         cd ${GITHUB_WORKSPACE}
+        source "${GITHUB_WORKSPACE}/build/${{matrix.target}}/settings.ini"
         wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
         source ./common.sh && parse_settings
         rm -rf ./common.sh
