@@ -93,8 +93,7 @@ jobs:
  
         source "build/${{matrix.target}}/settings.ini"
         wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
-        source ./common.sh && parse_settings
-        rm -rf ./common.sh
+        source ${GITHUB_WORKSPACE}/common.sh && parse_settings
         
         [ ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV || echo "UPLOAD_BIN_DIR=${UPLOAD_BIN_DIR}" >> $GITHUB_ENV
         [ ${{ github.event.inputs.UPLOAD_FIRMWARE }} ] && echo "UPLOAD_FIRMWARE=${{ github.event.inputs.UPLOAD_FIRMWARE }}" >> $GITHUB_ENV || echo "UPLOAD_FIRMWARE=${UPLOAD_FIRMWARE}" >> $GITHUB_ENV
@@ -106,16 +105,16 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        source ${COMMON_PATH}/common.sh && init_environment
-
+        source ${GITHUB_WORKSPACE}/common.sh && init_environment
+        
     - name: 下载"${{matrix.target}}"源码
       working-directory: /${{matrix.target}}
       run: |
-        source ${COMMON_PATH}/common.sh && git_clone_source
+        source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
 
     - name: 加载源,补丁和自定义设置
       run: |
-        source ${COMMON_PATH}/common.sh && do_diy
+        source ${GITHUB_WORKSPACE}/common.sh && do_diy
 
     - name: SSH远程连接（制作.config配置文件）
       if: ${{ github.event.inputs.ENABLE_SSH }} == 'true'
@@ -127,7 +126,7 @@ jobs:
     - name: 生成"${{matrix.target}}"配置文件
       id: compileop
       run: |
-        source ${COMMON_PATH}/common.sh && make_defconfig
+        source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
 
     - name: 上传.config配置文件至artifacts
       if: env.UPLOAD_CONFIG == 'true'
@@ -140,12 +139,12 @@ jobs:
       continue-on-error: true
       if: ${{ env.REPO_TOKEN }}
       run: |
-        source ${COMMON_PATH}/common.sh && update_repo
+        source ${GITHUB_WORKSPACE}/common.sh && update_repo
 
     - name: 编译信息
       continue-on-error: true
       run: |
-        source ${COMMON_PATH}/common.sh && compile_info
+        source ${GITHUB_WORKSPACE}/common.sh && compile_info
 
   compile-dispatch:
     needs: [build]

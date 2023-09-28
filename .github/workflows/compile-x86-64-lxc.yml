@@ -59,8 +59,7 @@ jobs:
  
         source "build/${{matrix.target}}/settings.ini"
         wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
-        source ./common.sh && parse_settings
-        rm -rf ./common.sh
+        source ${GITHUB_WORKSPACE}/common.sh && parse_settings
         
         [ ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV || echo "UPLOAD_BIN_DIR=${UPLOAD_BIN_DIR}" >> $GITHUB_ENV
         [ ${{ github.event.inputs.UPLOAD_FIRMWARE }} ] && echo "UPLOAD_FIRMWARE=${{ github.event.inputs.UPLOAD_FIRMWARE }}" >> $GITHUB_ENV || echo "UPLOAD_FIRMWARE=${UPLOAD_FIRMWARE}" >> $GITHUB_ENV
@@ -74,12 +73,12 @@ jobs:
       continue-on-error: true
       if: env.ENABLE_PACKAGES_UPDATE == 'true'
       run: |
-        source ${COMMON_PATH}/common.sh && update_packages
+        source ${GITHUB_WORKSPACE}/common.sh && update_packages
 
     - name: 编译开始TG或pushplus通知
       if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
-        source ${COMMON_PATH}/common.sh && notice_begin
+        source ${GITHUB_WORKSPACE}/common.sh && notice_begin
 
     - name: 释放磁盘空间
       uses: jlumbroso/free-disk-space@main
@@ -97,25 +96,25 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
       run: |
-        source ${COMMON_PATH}/common.sh && init_environment
+        source ${GITHUB_WORKSPACE}/common.sh && init_environment
     
     - name: 下载"${{matrix.target}}"源码
       working-directory: /${{matrix.target}}
       run: |
-        source ${COMMON_PATH}/common.sh && git_clone_source
+        source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
         
     - name: 加载源,补丁和自定义设置
       run: |
-        source ${COMMON_PATH}/common.sh && do_diy
+        source ${GITHUB_WORKSPACE}/common.sh && do_diy
         
     - name: 生成.config文件
       run: |
-        source ${COMMON_PATH}/common.sh && make_defconfig
+        source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
         
     - name: 编译信息
       continue-on-error: true
       run: |
-        source ${COMMON_PATH}/common.sh && compile_info
+        source ${GITHUB_WORKSPACE}/common.sh && compile_info
         
     - name: 缓存加速
       if: env.ENABLE_CACHEWRTBUILD == 'true'
@@ -151,7 +150,7 @@ jobs:
     - name: 整理固件文件夹
       id: organizer
       run: |
-        source ${COMMON_PATH}/common.sh && organize_firmware
+        source ${GITHUB_WORKSPACE}/common.sh && organize_firmware
         
     - name: 上传firmwares至artifacts
       continue-on-error: true
@@ -166,7 +165,7 @@ jobs:
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       run: |
         cd openwrt
-        source "${COMMON_PATH}/upgrade.sh" && Diy_Part3
+        source "${GITHUB_WORKSPACE}/upgrade.sh" && Diy_Part3
         
     - name: 发布[firmware]至release-2
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
@@ -198,7 +197,7 @@ jobs:
     - name: 编译完成TG或pushplus通知
       if: steps.compile.outcome == 'success' && env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || steps.compile.outcome == 'success' && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
-        source ${COMMON_PATH}/common.sh && notice_end
+        source ${GITHUB_WORKSPACE}/common.sh && notice_end
         
   delete-releases-artifacts:
     needs: [build]
