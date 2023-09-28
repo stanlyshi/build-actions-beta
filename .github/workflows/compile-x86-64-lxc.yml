@@ -28,7 +28,6 @@ env:
   GITHUB_REPO_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_ACTOR: ${{github.actor}}
-  REPOSITORY: $(${{github.repository}}##*/)
   GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
