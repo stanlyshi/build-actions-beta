@@ -151,7 +151,7 @@ jobs:
 
     - name: 更新REPO
       continue-on-error: true
-      if: ${{ secrets.REPO_TOKEN }}
+      if: ${{ env.REPO_TOKEN }}
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
 
@@ -180,7 +180,7 @@ jobs:
     steps:
         
     - name: 清理Actions空间
-      if: ${{ secrets.REPO_TOKEN }}
+      if: ${{ env.REPO_TOKEN }}
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
@@ -189,7 +189,7 @@ jobs:
           retain_days: 7
     
     - name: 删除releases
-      if: ${{ secrets.REPO_TOKEN }}
+      if: ${{ env.REPO_TOKEN }}
       uses: roacn/delete-older-releases@master
       with:
         repo: ${{ github.repository }}

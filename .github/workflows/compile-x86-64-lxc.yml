@@ -167,13 +167,13 @@ jobs:
 
         
     - name: 发布[firmware]至release-1
-      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       run: |
         cd openwrt
         source "${GITHUB_WORKSPACE}/upgrade.sh" && Diy_Part3
         
     - name: 发布[firmware]至release-2
-      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       uses: ncipollo/release-action@main
       with:
         allowUpdates: true
@@ -183,14 +183,14 @@ jobs:
         artifacts: "${{ env.UPLOAD_PATH }}/*"
         
     - name: 发布[tags]至release-3
-      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       run: |
         mkdir -p Github_Tags
         cd Github_Tags
         wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O Github_Tags
         
     - name: 发布[tags]至release-4
-      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       uses: roacn/upload-release-action@master
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
@@ -211,7 +211,7 @@ jobs:
     steps:
         
     - name: 清理Actions
-      if: ${{ secrets.REPO_TOKEN }}
+      if: ${{ env.REPO_TOKEN }}
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
@@ -220,7 +220,7 @@ jobs:
           retain_days: 7
     
     - name: 删除releases
-      if: ${{ secrets.REPO_TOKEN }}
+      if: ${{ env.REPO_TOKEN }}
       uses: roacn/delete-older-releases@master
       with:
         repo: ${{ github.repository }}
