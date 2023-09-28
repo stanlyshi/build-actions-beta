@@ -25,9 +25,10 @@ on:
    - cron: 0 22 * * 6
 
 env:
-  GITHUB_REPO: https://github.com/${{github.repository}}
-  GITHUB_ACTOR: ${{github.actor}}
+  GITHUB_REPO_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
+  GITHUB_ACTOR: ${{github.actor}}
+  REPOSITORY: $(${{github.repository}}##*/)
   GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -56,18 +57,22 @@ jobs:
     - name: 读取脚本
       run: |
         cd ${GITHUB_WORKSPACE}
- 
+        
         source "build/${{matrix.target}}/settings.ini"
-        wget https://raw.githubusercontent.com/stanlyshi/common/main/common.sh && chmod +x ./common.sh
+        
+        local common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
+        curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh
+        if [[ $? -ne 0 ]]; then
+            wget -q ${common_sh_url} -O ${GITHUB_WORKSPACE}/common.sh
+        fi
+        chmod +x ${GITHUB_WORKSPACE}/common.sh
         source ${GITHUB_WORKSPACE}/common.sh && parse_settings
         
+        [ ${{ github.event.inputs.SOURCE_BRANCH }} ] && echo "SOURCE_BRANCH=${{ github.event.inputs.SOURCE_BRANCH }}" >> $GITHUB_ENV || echo "SOURCE_BRANCH=${SOURCE_BRANCH}" >> $GITHUB_ENV        
+        [ ${{ github.event.inputs.CONFIG_FILE }} ] && echo "CONFIG_FILE=${{ github.event.inputs.CONFIG_FILE }}" >> $GITHUB_ENV || echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV     
         [ ${{ github.event.inputs.UPLOAD_BIN_DIR }} ] && echo "UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}" >> $GITHUB_ENV || echo "UPLOAD_BIN_DIR=${UPLOAD_BIN_DIR}" >> $GITHUB_ENV
         [ ${{ github.event.inputs.UPLOAD_FIRMWARE }} ] && echo "UPLOAD_FIRMWARE=${{ github.event.inputs.UPLOAD_FIRMWARE }}" >> $GITHUB_ENV || echo "UPLOAD_FIRMWARE=${UPLOAD_FIRMWARE}" >> $GITHUB_ENV
         [ ${{ github.event.inputs.ENABLE_CACHEWRTBUILD }} ] && echo "ENABLE_CACHEWRTBUILD=${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}" >> $GITHUB_ENV || echo "ENABLE_CACHEWRTBUILD=${ENABLE_CACHEWRTBUILD}" >> $GITHUB_ENV
-        [ ${{ github.event.inputs.KEEP_LASTEST }} ] && echo "KEEP_LASTEST=${{ github.event.inputs.KEEP_LASTEST }}" >> $GITHUB_ENV || echo "KEEP_LASTEST=6" >> $GITHUB_ENV
-        [ ${{ github.event.inputs.RETAIN_DAYS }} ] && echo "RETAIN_DAYS=${{ github.event.inputs.RETAIN_DAYS }}" >> $GITHUB_ENV || echo "RETAIN_DAYS=7" >> $GITHUB_ENV
-        
-
 
     - name: 更新插件库
       continue-on-error: true
@@ -162,13 +167,13 @@ jobs:
 
         
     - name: 发布[firmware]至release-1
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
       run: |
         cd openwrt
         source "${GITHUB_WORKSPACE}/upgrade.sh" && Diy_Part3
         
     - name: 发布[firmware]至release-2
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
       uses: ncipollo/release-action@main
       with:
         allowUpdates: true
@@ -178,14 +183,14 @@ jobs:
         artifacts: "${{ env.UPLOAD_PATH }}/*"
         
     - name: 发布[tags]至release-3
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
       run: |
         mkdir -p Github_Tags
         cd Github_Tags
         wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O Github_Tags
         
     - name: 发布[tags]至release-4
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success' && ${{ secrets.REPO_TOKEN }}
       uses: roacn/upload-release-action@master
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
@@ -204,26 +209,22 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
     steps:
-    - name: 读取设置
-      run: |
-        [ ${{ github.event.inputs.KEEP_LASTEST }} ] && echo "KEEP_LASTEST=${{ github.event.inputs.KEEP_LASTEST }}" >> $GITHUB_ENV || echo "KEEP_LASTEST=6" >> $GITHUB_ENV
-        [ ${{ github.event.inputs.RETAIN_DAYS }} ] && echo "RETAIN_DAYS=${{ github.event.inputs.ACTION_DAYS }}" >> $GITHUB_ENV || echo "RETAIN_DAYS=7" >> $GITHUB_ENV
         
     - name: 清理Actions
-      if: ${{ env.REPO_TOKEN }}
+      if: ${{ secrets.REPO_TOKEN }}
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
           repository: ${{ github.repository }}
           keep_minimum_runs: 0
-          retain_days: ${{ env.RETAIN_DAYS }}
+          retain_days: 7
     
     - name: 删除releases
-      if: ${{ env.REPO_TOKEN }}
+      if: ${{ secrets.REPO_TOKEN }}
       uses: roacn/delete-older-releases@master
       with:
         repo: ${{ github.repository }}
-        keep_latest: ${{ env.KEEP_LASTEST }}
+        keep_latest: 7
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}

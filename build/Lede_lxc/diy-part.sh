@@ -49,20 +49,12 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'           # 设置ttyd免帐�
 uci commit ttyd
 EOF
 
-echo '增加个性名字 ${Author} 默认为你的github帐号'
-sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" $ZZZ
+echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
+# sed -i "s/OpenWrt ${GITHUB_ACTOR} compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
+sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
 
-echo '恢复OPKG软件源为snapshot'
-sed -i '/openwrt_luci/d' $ZZZ
-
-echo '去除防火墙规则'
-sed -i '/to-ports 53/d' $ZZZ
-
-echo '设置密码为空'
-sed -i '/CYXluq4wUazHjmCDBCqXF/d' $ZZZ
-
-# x86机型,默认内核5.10，修改内核为5.15
-#sed -i 's/PATCHVER:=5.10/PATCHVER:=5.15/g' target/linux/x86/Makefile
+# x86机型,默认内核6.1，修改内核为5.15
+#sed -i 's/PATCHVER:=6.1/PATCHVER:=5.15/g' ${HOME_PATH}/target/linux/${TARGET_BOARD}/Makefile
 
 #############################################pushd#############################################
 pushd feeds
@@ -95,7 +87,7 @@ sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速"
 #EOF
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间
-cat >${CLEAR_FILE_PATH} <<-EOF
+cat >${GITHUB_WORKSPACE}/Clear <<-EOF
 rm -rf config.buildinfo
 rm -rf feeds.buildinfo
 rm -rf openwrt-x86-64-generic-kernel.bin
