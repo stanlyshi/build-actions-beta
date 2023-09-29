@@ -62,6 +62,7 @@ jobs:
         export INPUTS_ENABLE_SSH=${{ github.event.inputs.ENABLE_SSH }}
         export INPUTS_UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}
         export INPUTS_UPLOAD_FIRMWARE=${{ github.event.inputs.UPLOAD_FIRMWARE }}
+        export INPUTS_UPLOAD_CONFIG=${{ github.event.inputs.UPLOAD_CONFIG }}
         export INPUTS_ENABLE_CACHEWRTBUILD=${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
