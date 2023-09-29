@@ -1,249 +1,245 @@
 CONFIG_TARGET_x86=y
 CONFIG_TARGET_x86_64=y
 CONFIG_TARGET_x86_64_DEVICE_generic=y
-CONFIG_GRUB_IMAGES=y
-CONFIG_PACKAGE_6in4=y
-CONFIG_PACKAGE_6rd=y
-CONFIG_PACKAGE_6to4=y
-CONFIG_PACKAGE_TAR_BZIP2=y
-CONFIG_PACKAGE_TAR_GZIP=y
-CONFIG_PACKAGE_TAR_XZ=y
-CONFIG_PACKAGE_TAR_ZSTD=y
-# CONFIG_PACKAGE_adbyby is not set
-CONFIG_PACKAGE_alist=y
-CONFIG_PACKAGE_aliyundrive-fuse=y
-CONFIG_PACKAGE_bash=y
+CONFIG_NODEJS_14=y
+# CONFIG_NODEJS_16 is not set
+CONFIG_NODEJS_ICU_NONE=y
+CONFIG_PACKAGE_UnblockNeteaseMusic=y
+# CONFIG_PACKAGE_autosamba is not set
 CONFIG_PACKAGE_boost=y
+CONFIG_PACKAGE_boost-date_time=y
 CONFIG_PACKAGE_boost-program_options=y
 CONFIG_PACKAGE_boost-system=y
-CONFIG_PACKAGE_bzip2=y
+CONFIG_PACKAGE_brook=y
+CONFIG_PACKAGE_btrfs-progs=y
 CONFIG_PACKAGE_coreutils-nohup=y
-CONFIG_PACKAGE_coreutils-stat=y
-CONFIG_PACKAGE_coreutils-stty=y
-CONFIG_PACKAGE_ddns-go=y
+CONFIG_PACKAGE_dnsforwarder=y
 CONFIG_PACKAGE_dnsmasq_full_nftset=y
-CONFIG_PACKAGE_etherwake=y
-CONFIG_PACKAGE_frpc=y
-CONFIG_PACKAGE_fuse-utils=y
+CONFIG_PACKAGE_dnsproxy=y
+CONFIG_PACKAGE_gpioctl-sysfs=y
+CONFIG_PACKAGE_gpiod-tools=y
 CONFIG_PACKAGE_haproxy=y
-CONFIG_PACKAGE_ip6tables=y
+CONFIG_PACKAGE_hysteria=y
+CONFIG_PACKAGE_i2c-tools=y
 CONFIG_PACKAGE_ipt2socks=y
 CONFIG_PACKAGE_iptables-mod-conntrack-extra=y
-CONFIG_PACKAGE_iptables-mod-ipopt=y
 CONFIG_PACKAGE_iptables-mod-iprange=y
 # CONFIG_PACKAGE_iptables-mod-ipsec is not set
 CONFIG_PACKAGE_iptables-mod-socket=y
 CONFIG_PACKAGE_iputils-arping=y
-CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_jansson=y
 CONFIG_PACKAGE_jq=y
-CONFIG_PACKAGE_kmod-crypto-ccm=y
-CONFIG_PACKAGE_kmod-crypto-cmac=y
-CONFIG_PACKAGE_kmod-crypto-ctr=y
+CONFIG_PACKAGE_kcptun-client=y
+CONFIG_PACKAGE_kcptun-config=y
+CONFIG_PACKAGE_kmod-ata-core=y
+# CONFIG_PACKAGE_kmod-crypto-cbc is not set
 # CONFIG_PACKAGE_kmod-crypto-deflate is not set
+# CONFIG_PACKAGE_kmod-crypto-des is not set
 # CONFIG_PACKAGE_kmod-crypto-echainiv is not set
+# CONFIG_PACKAGE_kmod-crypto-hmac is not set
 # CONFIG_PACKAGE_kmod-crypto-kpp is not set
-CONFIG_PACKAGE_kmod-crypto-seqiv=y
-CONFIG_PACKAGE_kmod-crypto-sha512=y
-CONFIG_PACKAGE_kmod-dnsresolver=y
-CONFIG_PACKAGE_kmod-fs-cifs=y
-CONFIG_PACKAGE_kmod-fs-smbfs-common=y
-CONFIG_PACKAGE_kmod-fuse=y
-CONFIG_PACKAGE_kmod-ifb=y
+# CONFIG_PACKAGE_kmod-crypto-md5 is not set
+CONFIG_PACKAGE_kmod-fs-btrfs=y
+CONFIG_PACKAGE_kmod-gpio-amd-fch=y
+CONFIG_PACKAGE_kmod-hwmon-drivetemp=y
+CONFIG_PACKAGE_kmod-i2c-gpio=y
+CONFIG_PACKAGE_kmod-i2c-smbus=y
 CONFIG_PACKAGE_kmod-inet-diag=y
-CONFIG_PACKAGE_kmod-ip6tables=y
 # CONFIG_PACKAGE_kmod-ipsec is not set
 CONFIG_PACKAGE_kmod-ipt-conntrack-extra=y
-CONFIG_PACKAGE_kmod-ipt-ipopt=y
 CONFIG_PACKAGE_kmod-ipt-iprange=y
 # CONFIG_PACKAGE_kmod-ipt-ipsec is not set
-CONFIG_PACKAGE_kmod-ipt-nat6=y
 CONFIG_PACKAGE_kmod-ipt-socket=y
-CONFIG_PACKAGE_kmod-iptunnel=y
 # CONFIG_PACKAGE_kmod-iptunnel6 is not set
-CONFIG_PACKAGE_kmod-md-mod=y
-CONFIG_PACKAGE_kmod-md-raid0=y
-CONFIG_PACKAGE_kmod-md-raid1=y
-CONFIG_PACKAGE_kmod-md-raid10=y
-CONFIG_PACKAGE_kmod-nf-ipt6=y
+CONFIG_PACKAGE_kmod-lib-raid6=y
+CONFIG_PACKAGE_kmod-lib-xor=y
+CONFIG_PACKAGE_kmod-lib-zstd=y
+CONFIG_PACKAGE_kmod-netlink-diag=y
+# CONFIG_PACKAGE_kmod-nf-conntrack-netlink is not set
 CONFIG_PACKAGE_kmod-nf-log6=y
-CONFIG_PACKAGE_kmod-nf-nat6=y
 CONFIG_PACKAGE_kmod-nf-reject6=y
 CONFIG_PACKAGE_kmod-nf-socket=y
 CONFIG_PACKAGE_kmod-nft-core=y
 CONFIG_PACKAGE_kmod-nft-nat=y
 CONFIG_PACKAGE_kmod-nft-socket=y
 CONFIG_PACKAGE_kmod-nft-tproxy=y
-CONFIG_PACKAGE_kmod-sched-connmark=y
-CONFIG_PACKAGE_kmod-sched-core=y
-CONFIG_PACKAGE_kmod-sit=y
+# CONFIG_PACKAGE_kmod-shortcut-fe is not set
+# CONFIG_PACKAGE_kmod-shortcut-fe-cm is not set
+# CONFIG_PACKAGE_kmod-tcp-bbr is not set
 # CONFIG_PACKAGE_kmod-wireguard is not set
-CONFIG_PACKAGE_libbz2=y
-CONFIG_PACKAGE_libcap-bin=y
-CONFIG_PACKAGE_libcap-bin-capsh-shell="/bin/sh"
-CONFIG_PACKAGE_libfuse=y
+CONFIG_PACKAGE_libevent2=y
+CONFIG_PACKAGE_libgpiod=y
+CONFIG_PACKAGE_libi2c=y
 CONFIG_PACKAGE_libltdl=y
 CONFIG_PACKAGE_liblua5.3=y
-CONFIG_PACKAGE_liblzma=y
-# CONFIG_PACKAGE_libminiupnpc is not set
-# CONFIG_PACKAGE_libnatpmp is not set
+CONFIG_PACKAGE_liblzo=y
 CONFIG_PACKAGE_libnetsnmp=y
 CONFIG_PACKAGE_libnftnl=y
-CONFIG_PACKAGE_libruby=y
-CONFIG_PACKAGE_libyaml=y
-CONFIG_PACKAGE_libzstd=y
+CONFIG_PACKAGE_libugpio=y
+CONFIG_PACKAGE_lm-sensors-detect=y
 CONFIG_PACKAGE_lsblk=y
 # CONFIG_PACKAGE_luci-app-accesscontrol is not set
-# CONFIG_PACKAGE_luci-app-adbyby-plus is not set
-CONFIG_PACKAGE_luci-app-adguardhome=y
 CONFIG_PACKAGE_luci-app-advanced=y
-CONFIG_PACKAGE_luci-app-advanced-reboot=y
-CONFIG_PACKAGE_luci-app-alist=y
-CONFIG_PACKAGE_luci-app-aliyundrive-fuse=y
 CONFIG_PACKAGE_luci-app-argon-config=y
-CONFIG_PACKAGE_luci-app-chatgpt=y
-CONFIG_PACKAGE_luci-app-cifs-mount=y
-CONFIG_PACKAGE_luci-app-ddns-go=y
-CONFIG_PACKAGE_luci-app-dockerman=y
-CONFIG_PACKAGE_luci-app-frpc=y
+# CONFIG_PACKAGE_luci-app-arpbind is not set
+# CONFIG_PACKAGE_luci-app-autoreboot is not set
+# CONFIG_PACKAGE_luci-app-autoupdate is not set
+# CONFIG_PACKAGE_luci-app-ddns is not set
 # CONFIG_PACKAGE_luci-app-ipsec-vpnd is not set
-CONFIG_PACKAGE_luci-app-mwan3=y
-CONFIG_PACKAGE_luci-app-netdata=y
-CONFIG_PACKAGE_luci-app-nps=y
-CONFIG_PACKAGE_luci-app-openclash=y
-CONFIG_PACKAGE_luci-app-openvpn=y
+CONFIG_PACKAGE_luci-app-mosdns=y
+# CONFIG_PACKAGE_luci-app-nlbwmon is not set
 CONFIG_PACKAGE_luci-app-passwall=y
+CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Brook=y
+CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Hysteria=y
+CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_NaiveProxy=y
+CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_Shadowsocks_Rust_Client=y
+CONFIG_PACKAGE_luci-app-passwall2_INCLUDE_tuic_client=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Brook=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Hysteria=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_NaiveProxy=y
+# CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Libev_Server is not set
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Shadowsocks_Rust_Client=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Trojan_GO=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_V2ray_Geodata=y
+CONFIG_PACKAGE_luci-app-passwall_INCLUDE_Xray_Plugin=y
 CONFIG_PACKAGE_luci-app-passwall_Iptables_Transparent_Proxy=y
 CONFIG_PACKAGE_luci-app-passwall_Nftables_Transparent_Proxy=y
-CONFIG_PACKAGE_luci-app-poweroff=y
 CONFIG_PACKAGE_luci-app-pushbot=y
-CONFIG_PACKAGE_luci-app-qbittorrent=y
-CONFIG_PACKAGE_luci-app-qos=y
-CONFIG_PACKAGE_luci-app-quickstart=y
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-ng is not set
+# CONFIG_PACKAGE_luci-app-rclone_INCLUDE_rclone-webui is not set
+# CONFIG_PACKAGE_luci-app-samba4 is not set
 CONFIG_PACKAGE_luci-app-smartdns=y
-CONFIG_PACKAGE_luci-app-socat=y
-CONFIG_PACKAGE_luci-app-store=y
-CONFIG_PACKAGE_luci-app-syncdial=y
-CONFIG_PACKAGE_luci-app-uugamebooster=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Hysteria=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_IPT2Socks=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_NaiveProxy=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Redsocks2=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks_V2ray_Plugin=y
+CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Trojan=y
+# CONFIG_PACKAGE_luci-app-turboacc is not set
+# CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_BBR_CCA is not set
+# CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_PDNSD is not set
+# CONFIG_PACKAGE_luci-app-turboacc_INCLUDE_SHORTCUT_FE_CM is not set
+CONFIG_PACKAGE_luci-app-unblockmusic_INCLUDE_UnblockNeteaseMusic_NodeJS=y
+# CONFIG_PACKAGE_luci-app-upnp is not set
+# CONFIG_PACKAGE_luci-app-vlmcsd is not set
+# CONFIG_PACKAGE_luci-app-vsftpd is not set
+CONFIG_PACKAGE_luci-app-webadmin=y
 # CONFIG_PACKAGE_luci-app-wireguard is not set
+# CONFIG_PACKAGE_luci-app-wol is not set
 CONFIG_PACKAGE_luci-app-wolplus=y
 # CONFIG_PACKAGE_luci-app-xlnetacc is not set
-# CONFIG_PACKAGE_luci-app-zerotier is not set
 CONFIG_PACKAGE_luci-compat=y
-CONFIG_PACKAGE_luci-i18n-advanced-reboot-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-alist-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-aliyundrive-fuse-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-argon-config-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-chatgpt-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-cifs-mount-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-ddns-go-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-frpc-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-mwan3-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-netdata-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-nps-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-openvpn-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-mosdns-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-passwall-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-poweroff-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-qbittorrent-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-qos-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-quickstart-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-smartdns-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-socat-zh-cn=y
-CONFIG_PACKAGE_luci-i18n-uugamebooster-zh-cn=y
+CONFIG_PACKAGE_luci-i18n-webadmin-zh-cn=y
 CONFIG_PACKAGE_luci-i18n-wolplus-zh-cn=y
-CONFIG_PACKAGE_luci-lib-taskd=y
-CONFIG_PACKAGE_luci-lib-xterm=y
-CONFIG_PACKAGE_luci-proto-ipv6=y
 # CONFIG_PACKAGE_luci-proto-wireguard is not set
-CONFIG_PACKAGE_luci-theme-neobird2=y
-CONFIG_PACKAGE_luci-theme-opentomcat=y
-CONFIG_PACKAGE_luci-theme-opentopd=y
-CONFIG_PACKAGE_mdadm=y
-CONFIG_PACKAGE_mwan3=y
-CONFIG_PACKAGE_netdata=y
+CONFIG_PACKAGE_luci-theme-argon=y
+CONFIG_PACKAGE_luci-theme-material=y
+# CONFIG_PACKAGE_miniupnpd is not set
+CONFIG_PACKAGE_mosdns=y
+CONFIG_PACKAGE_naiveproxy=y
+CONFIG_PACKAGE_nano=y
 CONFIG_PACKAGE_nftables-json=y
-CONFIG_PACKAGE_npc=y
-CONFIG_PACKAGE_odhcp6c=y
-CONFIG_PACKAGE_odhcp6c_ext_cer_id=0
-CONFIG_PACKAGE_odhcpd-ipv6only=y
-CONFIG_PACKAGE_odhcpd_ipv6only_ext_cer_id=0
+# CONFIG_PACKAGE_nlbwmon is not set
+CONFIG_PACKAGE_node=y
 CONFIG_PACKAGE_openssh-sftp-server=y
-CONFIG_PACKAGE_qBittorrent-static=y
-CONFIG_PACKAGE_qos-scripts=y
-CONFIG_PACKAGE_quickstart=y
-CONFIG_PACKAGE_ruby=y
-CONFIG_PACKAGE_ruby-bigdecimal=y
-CONFIG_PACKAGE_ruby-date=y
-CONFIG_PACKAGE_ruby-digest=y
-CONFIG_PACKAGE_ruby-enc=y
-CONFIG_PACKAGE_ruby-forwardable=y
-CONFIG_PACKAGE_ruby-pstore=y
-CONFIG_PACKAGE_ruby-psych=y
-CONFIG_PACKAGE_ruby-stringio=y
-CONFIG_PACKAGE_ruby-strscan=y
-CONFIG_PACKAGE_ruby-yaml=y
-CONFIG_PACKAGE_script-utils=y
-CONFIG_PACKAGE_shadow=y
-CONFIG_PACKAGE_shadow-chage=y
-CONFIG_PACKAGE_shadow-chfn=y
-CONFIG_PACKAGE_shadow-chgpasswd=y
-CONFIG_PACKAGE_shadow-chpasswd=y
-CONFIG_PACKAGE_shadow-chsh=y
-CONFIG_PACKAGE_shadow-common=y
-CONFIG_PACKAGE_shadow-expiry=y
-CONFIG_PACKAGE_shadow-faillog=y
-CONFIG_PACKAGE_shadow-gpasswd=y
-CONFIG_PACKAGE_shadow-groupadd=y
-CONFIG_PACKAGE_shadow-groupdel=y
-CONFIG_PACKAGE_shadow-groupmems=y
-CONFIG_PACKAGE_shadow-groupmod=y
-CONFIG_PACKAGE_shadow-groups=y
-CONFIG_PACKAGE_shadow-grpck=y
-CONFIG_PACKAGE_shadow-grpconv=y
-CONFIG_PACKAGE_shadow-grpunconv=y
-CONFIG_PACKAGE_shadow-lastlog=y
-CONFIG_PACKAGE_shadow-login=y
-CONFIG_PACKAGE_shadow-logoutd=y
-CONFIG_PACKAGE_shadow-newgidmap=y
-CONFIG_PACKAGE_shadow-newgrp=y
-CONFIG_PACKAGE_shadow-newuidmap=y
-CONFIG_PACKAGE_shadow-newusers=y
-CONFIG_PACKAGE_shadow-nologin=y
-CONFIG_PACKAGE_shadow-passwd=y
-CONFIG_PACKAGE_shadow-pwck=y
-CONFIG_PACKAGE_shadow-pwconv=y
-CONFIG_PACKAGE_shadow-pwunconv=y
-CONFIG_PACKAGE_shadow-su=y
-CONFIG_PACKAGE_shadow-useradd=y
-CONFIG_PACKAGE_shadow-userdel=y
-CONFIG_PACKAGE_shadow-usermod=y
-CONFIG_PACKAGE_shadow-utils=y
-CONFIG_PACKAGE_shadow-vipw=y
-CONFIG_PACKAGE_smartd=y
+# CONFIG_PACKAGE_pdnsd-alt is not set
+CONFIG_PACKAGE_perl=y
+CONFIG_PACKAGE_perlbase-base=y
+CONFIG_PACKAGE_perlbase-bytes=y
+CONFIG_PACKAGE_perlbase-class=y
+CONFIG_PACKAGE_perlbase-config=y
+CONFIG_PACKAGE_perlbase-cwd=y
+CONFIG_PACKAGE_perlbase-errno=y
+CONFIG_PACKAGE_perlbase-essential=y
+CONFIG_PACKAGE_perlbase-fcntl=y
+CONFIG_PACKAGE_perlbase-file=y
+CONFIG_PACKAGE_perlbase-filehandle=y
+CONFIG_PACKAGE_perlbase-i18n=y
+CONFIG_PACKAGE_perlbase-integer=y
+CONFIG_PACKAGE_perlbase-io=y
+CONFIG_PACKAGE_perlbase-list=y
+CONFIG_PACKAGE_perlbase-locale=y
+CONFIG_PACKAGE_perlbase-params=y
+CONFIG_PACKAGE_perlbase-posix=y
+CONFIG_PACKAGE_perlbase-re=y
+CONFIG_PACKAGE_perlbase-scalar=y
+CONFIG_PACKAGE_perlbase-selectsaver=y
+CONFIG_PACKAGE_perlbase-socket=y
+CONFIG_PACKAGE_perlbase-symbol=y
+CONFIG_PACKAGE_perlbase-tie=y
+CONFIG_PACKAGE_perlbase-unicore=y
+CONFIG_PACKAGE_perlbase-utf8=y
+CONFIG_PACKAGE_perlbase-xsloader=y
+CONFIG_PACKAGE_redsocks2=y
+# CONFIG_PACKAGE_samba4-libs is not set
+# CONFIG_PACKAGE_samba4-server is not set
+CONFIG_PACKAGE_shadowsocks-rust-sslocal=y
+CONFIG_PACKAGE_sing-box=y
 CONFIG_PACKAGE_smartdns=y
 CONFIG_PACKAGE_snmpd=y
-CONFIG_PACKAGE_socat=y
 # CONFIG_PACKAGE_strongswan is not set
-CONFIG_PACKAGE_tar=y
-CONFIG_PACKAGE_taskd=y
-CONFIG_PACKAGE_tc-tiny=y
+CONFIG_PACKAGE_trojan=y
+CONFIG_PACKAGE_trojan-go=y
 CONFIG_PACKAGE_trojan-plus=y
+CONFIG_PACKAGE_tuic-client=y
 CONFIG_PACKAGE_unzip=y
-CONFIG_PACKAGE_uugamebooster=y
+CONFIG_PACKAGE_v2dat=y
 CONFIG_PACKAGE_v2ray-core=y
 CONFIG_PACKAGE_v2ray-geoip=y
 CONFIG_PACKAGE_v2ray-geosite=y
 CONFIG_PACKAGE_v2ray-plugin=y
+CONFIG_PACKAGE_vim-fuller=y
+# CONFIG_PACKAGE_vlmcsd is not set
+# CONFIG_PACKAGE_vsftpd-alt is not set
 # CONFIG_PACKAGE_wireguard-tools is not set
-CONFIG_PACKAGE_xz=y
-CONFIG_PACKAGE_xz-utils=y
-# CONFIG_PACKAGE_zerotier is not set
+# CONFIG_PACKAGE_wol is not set
+# CONFIG_PACKAGE_wsdd2 is not set
+CONFIG_PACKAGE_xray-plugin=y
+CONFIG_PERL_NOCOMMENT=y
+CONFIG_PERL_THREADS=y
+CONFIG_SING_BOX_WITH_CLASH_API=y
+CONFIG_SING_BOX_WITH_DHCP=y
+CONFIG_SING_BOX_WITH_ECH=y
+CONFIG_SING_BOX_WITH_QUIC=y
+CONFIG_SING_BOX_WITH_UTLS=y
+CONFIG_SING_BOX_WITH_WIREGUARD=y
 CONFIG_TARGET_KERNEL_PARTSIZE=30
 CONFIG_TARGET_ROOTFS_PARTSIZE=800
 # CONFIG_VMDK_IMAGES is not set
-CONFIG_ZSTD_OPTIMIZE_O3=y
 CONFIG_boost-compile-visibility-hidden=y
 CONFIG_boost-runtime-shared=y
 CONFIG_boost-static-and-shared-libs=y
 CONFIG_boost-variant-release=y
-CONFIG_shadow-all=y
+CONFIG_GNUTLS_ALPN=y
+CONFIG_GNUTLS_ANON=y
+# CONFIG_GNUTLS_CRYPTODEV is not set
+CONFIG_GNUTLS_DTLS_SRTP=y
+# CONFIG_GNUTLS_EXT_LIBTASN1 is not set
+CONFIG_GNUTLS_HEARTBEAT=y
+CONFIG_GNUTLS_OCSP=y
+# CONFIG_GNUTLS_PKCS11 is not set
+CONFIG_GNUTLS_PSK=y
+# CONFIG_GNUTLS_SRP is not set
+# CONFIG_GNUTLS_TPM is not set
+# CONFIG_LIBNETTLE_MINI is not set
+CONFIG_PACKAGE_attr=y
+CONFIG_PACKAGE_avahi-dbus-daemon=y
+CONFIG_PACKAGE_bash=y
+CONFIG_PACKAGE_dbus=y
+CONFIG_PACKAGE_libavahi-client=y
+CONFIG_PACKAGE_libavahi-dbus-support=y
+CONFIG_PACKAGE_libdaemon=y
+CONFIG_PACKAGE_libdbus=y
+CONFIG_PACKAGE_libexpat=y
+CONFIG_PACKAGE_libgmp=y
+CONFIG_PACKAGE_libgnutls=y
+CONFIG_PACKAGE_libnettle=y
+CONFIG_PACKAGE_libpopt=y
+CONFIG_PACKAGE_libtasn1=y
+CONFIG_PACKAGE_libtirpc=y
+CONFIG_PACKAGE_liburing=y
