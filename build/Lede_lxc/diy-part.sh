@@ -2,7 +2,7 @@
 
 echo "--------------diy_part_sh start--------------"
 echo
-echo '修改 IP设置'
+echo "修改 IP设置"
 cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                 	# 删除wan口
 #uci delete network.wan6                               		# 删除wan6口
