@@ -126,7 +126,7 @@ jobs:
       with:
         ccache: 'true'
         mixkey: "${{matrix.target}}-${{ env.TARGET_PROFILE }}"
-        prefix: ${HOME_PATH}
+        prefix: ${{ env.HOME_PATH }}
         
     - name: 下载软件包
       id: package
@@ -149,7 +149,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: firmware_and_ipk_${{ env.SOURCE }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
-        path: ${BIN_PATH}
+        path: ${{ env.BIN_PATH }}
     
     - name: 整理固件文件夹
       id: organizer
