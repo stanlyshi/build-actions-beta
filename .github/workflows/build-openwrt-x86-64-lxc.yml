@@ -100,7 +100,7 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@v3
 
-    - name: 读取脚本设置
+    - name: 获取设置
       run: |
         cd ${GITHUB_WORKSPACE}
         export INPUTS_SOURCE_BRANCH=${{ github.event.inputs.SOURCE_BRANCH }}
@@ -117,8 +117,10 @@ jobs:
         if [[ $? -ne 0 ]]; then
             wget -q ${common_sh_url} -O ${GITHUB_WORKSPACE}/common.sh
         fi
-        chmod +x ${GITHUB_WORKSPACE}/common.sh        
+        chmod +x ${GITHUB_WORKSPACE}/common.sh
         source ${GITHUB_WORKSPACE}/common.sh && parse_settings
+        
+        echo "INPUTS_SOURCE_BRANCH=${INPUTS_SOURCE_BRANCH}"
 
     - name: 部署编译环境
       env:
@@ -131,11 +133,11 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
 
-    - name: 加载源,补丁和自定义设置
+    - name: 更新源,补丁和自定义设置
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
 
-    - name: SSH远程连接（制作.config配置文件）
+    - name: SSH远程连接（make menuconfig）
       if: ${{ env.ENABLE_SSH }} == 'true'
       uses: danshui-git/debugger-action@main
 
@@ -144,24 +146,24 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
 
-    - name: 上传.config配置文件至artifacts
+    - name: 上传"${{matrix.target}}"配置文件至artifacts
       if: steps.makedeconfig.outcome == 'success' && env.UPLOAD_CONFIG == 'true'
       uses: actions/upload-artifact@v3
       with:
         name: .config_${{ env.SOURCE_ABBR }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
         path: ${GITHUB_WORKSPACE}/${{ env.DIFFCONFIG_FILE }}
 
-    - name: 更新REPO
-      continue-on-error: true
-      if: ${{ env.REPO_TOKEN }}
-      run: |
-        source ${GITHUB_WORKSPACE}/common.sh && update_repo
-
     - name: 编译信息
       continue-on-error: true
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && compile_info
 
+    - name: 更新REPO
+      continue-on-error: true
+      if: ${{ env.REPO_TOKEN }}
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && update_repo
+        
   compile-dispatch:
     needs: [build]
     runs-on: ubuntu-latest

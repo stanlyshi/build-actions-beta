@@ -53,7 +53,7 @@ jobs:
     - name: 准备结束
       uses: actions/checkout@v3
 
-    - name: 读取脚本
+    - name: 获取设置
       run: |
         cd ${GITHUB_WORKSPACE}
         export INPUTS_SOURCE_BRANCH=${{ github.event.inputs.SOURCE_BRANCH }}
@@ -107,7 +107,7 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
         
-    - name: 加载源,补丁和自定义设置
+    - name: 更新源,补丁和自定义设置
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
         
