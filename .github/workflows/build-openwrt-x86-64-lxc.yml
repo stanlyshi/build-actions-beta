@@ -120,7 +120,6 @@ jobs:
         chmod +x ${GITHUB_WORKSPACE}/common.sh
         source ${GITHUB_WORKSPACE}/common.sh && parse_settings
         
-        echo "INPUTS_SOURCE_BRANCH=${INPUTS_SOURCE_BRANCH}"
 
     - name: 部署编译环境
       env:
