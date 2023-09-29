@@ -136,7 +136,7 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
 
     - name: SSH远程连接（制作.config配置文件）
-      if: ${{ github.event.inputs.ENABLE_SSH }} == 'true'
+      if: ${{ env.ENABLE_SSH }} == 'true'
       uses: danshui-git/debugger-action@main
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -152,7 +152,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: .config_${{ env.SOURCE_ABBR }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
-        path: ${GITHUB_WORKSPACE}/${CONFIG_FILE}
+        path: ${GITHUB_WORKSPACE}/${{ env.DIFFCONFIG_FILE }}
 
     - name: 更新REPO
       continue-on-error: true
