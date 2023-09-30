@@ -136,7 +136,7 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
       
     - name: SSH远程连接（make menuconfig）
-      if: ${{ env.ENABLE_SSH }} == 'true'
+      if: env.ENABLE_SSH == 'true'
       uses: danshui-git/debugger-action@main
       
     - name: 生成"${{matrix.target}}"配置文件
