@@ -12,14 +12,65 @@ on:
     types: [编译x86-64-lxc固件]
   workflow_dispatch:
     inputs:
-      days:
-        description: '清理[X]天之前的Actions空间操作记录(可改)'
+      SOURCE_BRANCH:
+        description: '选择Lede源码分支'
         required: true
-        default: '7'
-      rele:
-        description: '保留[X]个Releases不被删除(可改)'
+        default: 'master'
+        type: choice
+        options:
+          - 'master'
+      CONFIG_FILE:
+        description: '选择配置文件'
         required: true
-        default: '6'
+        default: 'x86_64'
+        type: choice
+        options:
+          - 'x86_32'
+          - 'x86_64'
+          - 'n1'
+      FIRMWARE_TYPE:
+        description: '固件类型'
+        required: true
+        default: 'lxc'
+        type: choice
+        options:
+          - 'lxc'
+          - 'kvm'
+      NOTICE_TYPE:
+        description: 'Telegram或pushplus信息通知'
+        required: true
+        default: 'Telegram'
+        type: choice
+        options:
+          - 'Telegram'
+          - 'Pushplus'
+          - 'Wechat'
+          - 'false'
+      ENABLE_SSH:
+        description: '开启SSH远程配置'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_RELEASE:
+        description: '发布固件到 Github Releases'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_FIRMWARE:
+        description: '上传固件到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      UPLOAD_CONFIG:
+        description: '上传.config到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      ENABLE_CACHEWRTBUILD:
+        description: '开启缓存加速'
+        required: false
+        default: 'true'
+        type: boolean
   schedule:
    - cron: 30 0 * * 5
    - cron: 0 22 * * 6
@@ -56,14 +107,15 @@ jobs:
     - name: 获取设置
       run: |
         cd ${GITHUB_WORKSPACE}
-        export INPUTS_SOURCE_BRANCH=${{ github.event.inputs.SOURCE_BRANCH }}
-        export INPUTS_CONFIG_FILE=${{ github.event.inputs.CONFIG_FILE }}
-        export INPUTS_NOTICE_TYPE=${{ github.event.inputs.NOTICE_TYPE }}
-        export INPUTS_ENABLE_SSH=${{ github.event.inputs.ENABLE_SSH }}
-        export INPUTS_UPLOAD_BIN_DIR=${{ github.event.inputs.UPLOAD_BIN_DIR }}
-        export INPUTS_UPLOAD_FIRMWARE=${{ github.event.inputs.UPLOAD_FIRMWARE }}
-        export INPUTS_UPLOAD_CONFIG=${{ github.event.inputs.UPLOAD_CONFIG }}
-        export INPUTS_ENABLE_CACHEWRTBUILD=${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}
+        export INPUTS_SOURCE_BRANCH="${{ github.event.inputs.SOURCE_BRANCH }}"
+        export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
+        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"        
+        export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
+        export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
+        export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
+        export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
+        export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
+        export INPUTS_ENABLE_CACHEWRTBUILD="${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}"
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
         curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh
