@@ -10,8 +10,8 @@
 
 name: 编译lede-x86固件
 on:
-  # 触发类型可以自定义，但须对应触发.yml文件内相同，例如：编译x86固件
   repository_dispatch:
+    # 触发类型可以自定义，但须对应触发.yml文件内相同，例如：编译lede-x86固件
     types: [编译lede-x86固件]
   workflow_dispatch:
     inputs:
