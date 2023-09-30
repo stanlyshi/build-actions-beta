@@ -227,7 +227,7 @@ jobs:
         
     - name: 发布自动更新固件-固件
       id: autoupdate
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success'
       uses: ncipollo/release-action@main
       with:
         allowUpdates: true
@@ -237,7 +237,7 @@ jobs:
         artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
         
     - name: 发布自动更新固件-获取API
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success'
       run: |
         mkdir -p Github_Api
         cd Github_Api
@@ -247,7 +247,7 @@ jobs:
         fi
         
     - name: 发布自动更新固件-编译信息
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
+      if: steps.compile.outcome == 'success'
       uses: roacn/upload-release-action@master
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
