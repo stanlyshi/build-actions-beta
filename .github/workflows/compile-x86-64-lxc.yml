@@ -234,7 +234,7 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}        
         tag: ${{ env.RELEASE_TAG }}
         bodyFile: ${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md
-        artifacts: "${{ env.UPLOAD_PATH }}/*"
+        artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
         
     - name: 发布自动更新固件-获取API
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
