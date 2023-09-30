@@ -8,7 +8,7 @@
 #=================================================
 
 
-name: 触发lede-x86编译
+name: 触发lede编译
 on:
   workflow_dispatch:
     inputs:
@@ -82,7 +82,7 @@ on:
 env:
   BUILD_YML: lede.yml
   COMPILE_YML: compile-lede.yml
-  EVENT_TYPE: 编译lede-x86固件
+  EVENT_TYPE: 编译lede固件
   GITHUB_REPO_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_ACTOR: ${{github.actor}}
