@@ -268,7 +268,7 @@ jobs:
     steps:
         
     - name: 清理Actions
-      if: ${{ env.REPO_TOKEN }}
+      if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
@@ -277,7 +277,7 @@ jobs:
           retain_days: 7
     
     - name: 删除releases
-      if: ${{ env.REPO_TOKEN }}
+      if: env.REPO_TOKEN
       uses: roacn/delete-older-releases@master
       with:
         repo: ${{github.repository}}
