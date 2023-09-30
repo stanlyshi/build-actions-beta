@@ -34,7 +34,7 @@ on:
       FIRMWARE_TYPE:
         description: '固件类型'
         required: true
-        default: 'lxc'
+        default: 'kvm'
         type: choice
         options:
           - 'lxc'
