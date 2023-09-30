@@ -150,7 +150,7 @@ jobs:
       if: steps.makedeconfig.outcome == 'success' && env.UPLOAD_CONFIG == 'true'
       uses: actions/upload-artifact@v3
       with:
-        name: .config_${{ env.SOURCE_ABBR }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
+        name: .config_${{ env.SOURCE }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
         path: ${{ env.DIFFCONFIG_FILE }}
 
     - name: 编译信息
