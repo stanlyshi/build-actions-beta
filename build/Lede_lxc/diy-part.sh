@@ -86,13 +86,15 @@ sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速"
 #EOF
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间
-cat >> ${CLEAR_FILE_PATH} <<-EOF
-rm -rf config.buildinfo
-rm -rf feeds.buildinfo
-rm -rf openwrt-x86-64-generic-kernel.bin
-rm -rf openwrt-x86-64-generic.manifest
-rm -rf sha256sums
-rm -rf version.buildinfo
+cat >> ${CLEAR_FILE} <<-EOF
+packages
+config.buildinfo
+feeds.buildinfo
+openwrt-x86-64-generic-kernel.bin
+openwrt-x86-64-generic.manifest
+profiles.json
+sha256sums
+version.buildinfo
 EOF
 
 echo
