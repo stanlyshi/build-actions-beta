@@ -108,10 +108,12 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
         
     - name: 更新源,补丁和自定义设置
+      if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
         
     - name: 生成.config文件
+      if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
         
@@ -130,6 +132,7 @@ jobs:
         
     - name: 下载软件包
       id: package
+      if: env.REPO_TOKEN
       run: |
         cd ${HOME_PATH}
         make defconfig
@@ -139,20 +142,15 @@ jobs:
         
     - name: 开始编译固件
       id: compile
+      if: env.REPO_TOKEN
       run: |
         cd ${HOME_PATH}
         echo -e "$(nproc) thread compile"
         make -j$(($(nproc) + 1)) || make -j1 V=s
-        
-    - name: 上传bin文件夹(固件+ipk)至actions
-      if: steps.compile.outcome == 'success' && env.UPLOAD_BIN_DIR == 'true'
-      uses: actions/upload-artifact@v3
-      with:
-        name: firmware_and_ipk_${{ env.SOURCE }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
-        path: ${{ env.BIN_PATH }}
-    
+            
     - name: 整理固件文件夹
-      id: organizer
+      id: organize
+      if: steps.compile.outcome == 'success'
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && organize_firmware
         
@@ -161,17 +159,22 @@ jobs:
       if: steps.compile.outcome == 'success' && env.UPLOAD_FIRMWARE == 'true'
       uses: actions/upload-artifact@v3
       with:
-        name: ${{ env.KERNEL_PATCHVER }}-${{ env.LUCI_EDITION }}-${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.COMPILE_DATE }}
+        name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.KERNEL_PATCHVER }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.COMPILE_DATE }}
         path: ${{ env.FIRMWARE_PATH }}
 
+    - name: 发布固件
+      if: steps.compile.outcome == 'success' && env.UPLOAD_RELEASE == 'true'
+      uses: ncipollo/release-action@main
+      with:
+        name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}
+        tag: a${{ env.date }}
+        token: ${{ secrets.REPO_TOKEN }}
+        allowUpdates: true
+        body: ${{ env.Tongzhi_Date }}
+        artifacts: "${{ env.FIRMWARE_PATH }}/*"
         
-    - name: 发布[firmware]至release-1
-      if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
-      run: |
-        cd openwrt
-        source "${GITHUB_WORKSPACE}/upgrade.sh" && Diy_Part3
-        
-    - name: 发布[firmware]至release-2
+    - name: 发布自动更新固件-固件
+      id: autoupdate
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       uses: ncipollo/release-action@main
       with:
@@ -181,19 +184,22 @@ jobs:
         bodyFile: ${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md
         artifacts: "${{ env.UPLOAD_PATH }}/*"
         
-    - name: 发布[tags]至release-3
+    - name: 发布自动更新固件-获取API
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       run: |
-        mkdir -p Github_Tags
-        cd Github_Tags
-        wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O Github_Tags
+        mkdir -p Github_Api
+        cd Github_Api
+        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o github_api
+        if [[ $? -ne 0 ]]; then
+            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O github_api
+        fi
         
-    - name: 发布[tags]至release-4
+    - name: 发布自动更新固件-编译信息
       if: steps.compile.outcome == 'success' && ${{ env.REPO_TOKEN }}
       uses: roacn/upload-release-action@master
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
-        file: Github_Tags/*
+        file: Github_Api/*
         tag: ${{ env.RELEASE_TAG }}
         overwrite: true
         file_glob: true
@@ -214,7 +220,7 @@ jobs:
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
-          repository: ${{ github.repository }}
+          repository: ${{github.repository}}
           keep_minimum_runs: 0
           retain_days: 7
     
@@ -222,7 +228,7 @@ jobs:
       if: ${{ env.REPO_TOKEN }}
       uses: roacn/delete-older-releases@master
       with:
-        repo: ${{ github.repository }}
+        repo: ${{github.repository}}
         keep_latest: 7
         delete_tags: true
       env:

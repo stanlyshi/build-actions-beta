@@ -132,6 +132,7 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
 
     - name: 更新源,补丁和自定义设置
+      if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
       
@@ -140,6 +141,7 @@ jobs:
       uses: danshui-git/debugger-action@main
       
     - name: 生成"${{matrix.target}}"配置文件
+      if: env.REPO_TOKEN
       id: makedeconfig
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
@@ -158,7 +160,7 @@ jobs:
 
     - name: 更新REPO
       continue-on-error: true
-      if: ${{ env.REPO_TOKEN }}
+      if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
         
@@ -182,7 +184,7 @@ jobs:
     steps:
         
     - name: 清理Actions空间
-      if: ${{ env.REPO_TOKEN }}
+      if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
@@ -191,7 +193,7 @@ jobs:
           retain_days: 7
     
     - name: 删除releases
-      if: ${{ env.REPO_TOKEN }}
+      if: env.REPO_TOKEN
       uses: roacn/delete-older-releases@master
       with:
         repo: ${{ github.repository }}
