@@ -122,7 +122,7 @@ jobs:
         if [[ $? -ne 0 ]]; then
             wget -q ${common_sh_url} -O ${GITHUB_WORKSPACE}/common.sh
         fi
-        chmod +x ${GITHUB_WORKSPACE}/common.sh        
+        chmod +x ${GITHUB_WORKSPACE}/common.sh
         source ${GITHUB_WORKSPACE}/common.sh && parse_settings
 
     - name: 更新插件库
