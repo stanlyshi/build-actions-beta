@@ -53,7 +53,7 @@ echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
 sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
 
 # x86机型,默认内核6.1，修改内核为6.1
-export NEW_KERNEL_PATCHVER="6.1"
+echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
 
 #############################################pushd#############################################
 # pushd feeds

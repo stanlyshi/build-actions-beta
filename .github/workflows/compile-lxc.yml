@@ -1,0 +1,289 @@
+#=================================================
+# https://github.com/roacn/build-actions
+# Description: Build OpenWrt using GitHub Actions
+# Lisence: GNU General Public License v3.0
+# Author: Ss.
+# build-openwrt-lxc.yml触发compile-lxc.yml编译
+# build-openwrt.yml触发compile.yml编译
+#=================================================
+
+
+name: 编译x86-lxc固件
+on:
+  repository_dispatch:
+    # 触发类型可以自定义，但须对应触发.yml文件内相同，例如：编译x86-lxc固件
+    types: [编译x86-lxc固件]
+  workflow_dispatch:
+    inputs:
+      SOURCE_BRANCH:
+        description: '选择Lede源码分支'
+        required: true
+        default: 'master'
+        type: choice
+        options:
+          - 'master'
+      CONFIG_FILE:
+        description: '选择配置文件'
+        required: true
+        default: 'x86_64'
+        type: choice
+        options:
+          - 'x86_32'
+          - 'x86_64'
+          - 'n1'
+      FIRMWARE_TYPE:
+        description: '固件类型'
+        required: true
+        default: 'lxc'
+        type: choice
+        options:
+          - 'lxc'
+          - 'kvm'
+      NOTICE_TYPE:
+        description: 'Telegram或pushplus信息通知'
+        required: true
+        default: 'Telegram'
+        type: choice
+        options:
+          - 'Telegram'
+          - 'Pushplus'
+          - 'Wechat'
+          - 'false'
+      ENABLE_SSH:
+        description: '开启SSH远程配置'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_RELEASE:
+        description: '发布固件到 Github Releases'
+        required: false
+        default: 'false'
+        type: boolean
+      UPLOAD_FIRMWARE:
+        description: '上传固件到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      UPLOAD_CONFIG:
+        description: '上传.config到 Github Artifacts'
+        required: false
+        default: 'true'
+        type: boolean
+      ENABLE_CACHEWRTBUILD:
+        description: '开启缓存加速'
+        required: false
+        default: 'true'
+        type: boolean
+  schedule:
+   - cron: 30 0 * * 5
+   - cron: 0 22 * * 6
+
+env:
+  GITHUB_REPO_URL: https://github.com/${{github.repository}}
+  GITHUB_REPOSITORY: ${{github.repository}}
+  GITHUB_ACTOR: ${{github.actor}}
+  GITHUB_WORKFLOW: ${{github.workflow}}
+  REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  PUSH_PLUS_TOKEN: ${{ secrets.PUSH_PLUS_TOKEN }}
+  TZ: Asia/Shanghai
+
+jobs:
+  build:
+    name: 编译 "${{matrix.target}}"
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    env:
+      MATRIX_TARGET: ${{matrix.target}}
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [Lede_lxc]
+        
+        # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
+
+    steps:
+    - name: 准备结束
+      uses: actions/checkout@v3
+
+    - name: 获取设置
+      run: |
+        cd ${GITHUB_WORKSPACE}
+        export INPUTS_SOURCE_BRANCH="${{ github.event.inputs.SOURCE_BRANCH }}"
+        export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
+        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"        
+        export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
+        export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
+        export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
+        export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
+        export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
+        export INPUTS_ENABLE_CACHEWRTBUILD="${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}"
+        
+        common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
+        curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh
+        if [[ $? -ne 0 ]]; then
+            wget -q ${common_sh_url} -O ${GITHUB_WORKSPACE}/common.sh
+        fi
+        chmod +x ${GITHUB_WORKSPACE}/common.sh
+        source ${GITHUB_WORKSPACE}/common.sh && parse_settings
+
+    - name: 更新插件库
+      continue-on-error: true
+      if: env.ENABLE_PACKAGES_UPDATE == 'true'
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && update_packages
+
+    - name: 编译开始TG或pushplus通知
+      if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && notice_begin
+
+    - name: 释放磁盘空间
+      uses: jlumbroso/free-disk-space@main
+      with:
+        # this might remove tools that are actually needed, if set to "true" but frees about 6 GB
+        tool-cache: true
+        # all of these default to true, but feel free to set to "false" if necessary for your workflow
+        android: true
+        dotnet: true
+        haskell: true
+        large-packages: true
+        swap-storage: true
+        
+    - name: 部署编译环境
+      env:
+        DEBIAN_FRONTEND: noninteractive
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && init_environment
+    
+    - name: 下载"${{matrix.target}}"源码
+      working-directory: /${{matrix.target}}
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
+        
+    - name: 更新源,补丁和自定义设置
+      if: env.REPO_TOKEN
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && do_diy
+        
+    - name: 生成.config文件
+      if: env.REPO_TOKEN
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && make_defconfig
+        
+    - name: 编译信息
+      continue-on-error: true
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && compile_info
+        
+    - name: 缓存加速
+      if: env.ENABLE_CACHEWRTBUILD == 'true'
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: "${{matrix.target}}-${{ env.TARGET_PROFILE }}"
+        prefix: ${{ env.HOME_PATH }}
+        
+    - name: 下载软件包
+      id: package
+      if: env.REPO_TOKEN
+      run: |
+        cd ${HOME_PATH}
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        
+    - name: 开始编译固件
+      id: compile
+      if: env.REPO_TOKEN
+      run: |
+        cd ${HOME_PATH}
+        echo -e "$(nproc) thread compile"
+        make -j$(($(nproc) + 1)) || make -j1 V=s
+            
+    - name: 整理固件文件夹
+      id: organize
+      if: steps.compile.outcome == 'success'
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && organize_firmware
+        
+    - name: 上传固件至artifacts
+      continue-on-error: true
+      if: steps.compile.outcome == 'success' && env.UPLOAD_FIRMWARE == 'true'
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.KERNEL_PATCHVER }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.COMPILE_DATE }}
+        path: ${{ env.FIRMWARE_PATH }}
+
+    - name: 发布固件
+      if: steps.compile.outcome == 'success' && env.UPLOAD_RELEASE == 'true'
+      uses: ncipollo/release-action@main
+      with:
+        name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}
+        tag: a${{ env.date }}
+        token: ${{ secrets.REPO_TOKEN }}
+        allowUpdates: true
+        body: ${{ env.Tongzhi_Date }}
+        artifacts: "${{ env.FIRMWARE_PATH }}/*"
+        
+    - name: 发布自动更新固件-固件
+      id: autoupdate
+      if: steps.compile.outcome == 'success'
+      uses: ncipollo/release-action@main
+      with:
+        allowUpdates: true
+        token: ${{ secrets.REPO_TOKEN }}        
+        tag: ${{ env.RELEASE_TAG }}
+        bodyFile: ${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md
+        artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
+        
+    - name: 发布自动更新固件-获取API
+      if: steps.compile.outcome == 'success'
+      run: |
+        mkdir -p Github_Api
+        cd Github_Api
+        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o github_api
+        if [[ $? -ne 0 ]]; then
+            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O github_api
+        fi
+        
+    - name: 发布自动更新固件-编译信息
+      if: steps.compile.outcome == 'success'
+      uses: roacn/upload-release-action@master
+      with:
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: Github_Api/*
+        tag: ${{ env.RELEASE_TAG }}
+        overwrite: true
+        file_glob: true
+
+    - name: 编译完成TG或pushplus通知
+      if: steps.compile.outcome == 'success' && env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || steps.compile.outcome == 'success' && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && notice_end
+        
+  delete-releases-artifacts:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    steps:        
+    - name: 清理Actions
+      if: env.REPO_TOKEN
+      uses: Mattraks/delete-workflow-runs@v2
+      with:
+          token: ${{ secrets.REPO_TOKEN }}
+          repository: ${{github.repository}}
+          keep_minimum_runs: 0
+          retain_days: 7
+    
+    - name: 删除releases
+      if: env.REPO_TOKEN
+      uses: roacn/delete-older-releases@master
+      with:
+        repo: ${{github.repository}}
+        keep_latest: 7
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}

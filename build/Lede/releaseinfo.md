@@ -1,4 +1,4 @@
-| 路由器         | 设置       | 源码           | 内核           | 插件                                                         |
-| -------------- | ---------- | -------------- | -------------- | ------------------------------------------------------------ |
-| release_device | release_ip | release_source | release_kernel | [plugin](https://github.com/roacn/build-actions/blob/main/build/Lede_source/plugin) |
+| 路由器         | 默认IP     | 默认密码         | 源码           | 内核           | 插件                                                         |
+| -------------- | ---------- | ---------------- | -------------- | -------------- | ------------------------------------------------------------ |
+| release_device | default_ip | default_password | release_source | release_kernel | [plugin](https://github.com/repository/blob/main/build/matrixtarget/plugins) |
 
