@@ -28,7 +28,7 @@ on:
       NOTICE_TYPE:
         description: 'Telegram或pushplus信息通知'
         required: true
-        default: 'false'
+        default: 'Telegram'
         type: choice
         options:
           - 'Telegram'
