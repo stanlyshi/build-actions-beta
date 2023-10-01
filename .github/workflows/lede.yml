@@ -163,7 +163,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: .config_${{ env.SOURCE }}_${{ env.TARGET_PROFILE }}_${{ env.COMPILE_DATE }}
-        path: ${{ env.DIFFCONFIG_FILE }}
+        path: ${{ env.DIFFCONFIG_TXT }}
 
     - name: 编译信息
       continue-on-error: true
