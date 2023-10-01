@@ -29,7 +29,7 @@ on:
           - 'x86_64'
           - 'n1'
       FIRMWARE_TYPE:
-        description: '固件类型'
+        description: '选择固件类型'
         required: true
         default: 'kvm'
         type: choice
