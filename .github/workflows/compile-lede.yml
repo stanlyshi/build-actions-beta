@@ -225,10 +225,10 @@ jobs:
       uses: ncipollo/release-action@main
       with:
         name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}
-        tag: a${{ env.date }}
+        tag: a${{ env.COMPILE_DATE_HMS }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
-        body: ${{ env.Tongzhi_Date }}
+        body: ${{ env.COMPILE_DATE_CN }}
         artifacts: "${{ env.FIRMWARE_PATH }}/*"
         
     - name: 发布自动更新固件-固件
@@ -237,7 +237,7 @@ jobs:
       uses: ncipollo/release-action@main
       with:
         allowUpdates: true
-        token: ${{ secrets.REPO_TOKEN }}        
+        token: ${{ secrets.REPO_TOKEN }}
         tag: ${{ env.RELEASE_TAG }}
         bodyFile: ${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md
         artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
@@ -251,17 +251,17 @@ jobs:
         if [[ $? -ne 0 ]]; then
             wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O github_api
         fi
-        
+
     - name: 发布自动更新固件-编译信息
       if: steps.compile.outcome == 'success'
-      uses: roacn/upload-release-action@master
+      uses: ncipollo/release-action@main
       with:
-        repo_token: ${{ secrets.REPO_TOKEN }}
-        file: Github_Api/*
+        allowUpdates: true
+        token: ${{ secrets.REPO_TOKEN }}
         tag: ${{ env.RELEASE_TAG }}
-        overwrite: true
-        file_glob: true
-
+        bodyFile: ${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md
+        artifacts: "Github_Api/*"
+        
     - name: 编译完成TG或pushplus通知
       if: steps.compile.outcome == 'success' && env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || steps.compile.outcome == 'success' && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
