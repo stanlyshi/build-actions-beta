@@ -225,9 +225,10 @@ jobs:
       uses: ncipollo/release-action@main
       with:
         name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}
-        tag: a${{ env.COMPILE_DATE_HMS }}
+        tag: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
+        replacesArtifacts: true
         body: ${{ env.COMPILE_DATE_CN }}
         artifacts: "${{ env.FIRMWARE_PATH }}/*"
         
