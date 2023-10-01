@@ -3,9 +3,11 @@
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: GNU General Public License v3.0
 # Author: Ss.
-# build-openwrt-lxc.yml触发compile-lxc.yml编译
-# build-openwrt.yml触发compile.yml编译
+# build-lede-lxc.yml触发compile-lede-lxc.yml编译
+# build-lede.yml触发compile-lede.yml编译
+# build-openwrt.yml触发compile-openwrt.yml编译
 #=================================================
+
 
 
 name: 编译lede-lxc固件
@@ -74,9 +76,6 @@ on:
         required: false
         default: 'true'
         type: boolean
-  schedule:
-   - cron: 30 0 * * 5
-   - cron: 0 22 * * 6
 
 env:
   GIT_REPO_URL: https://github.com/${{github.repository}}

@@ -3,8 +3,9 @@
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: GNU General Public License v3.0
 # Author: Ss.
-# build-openwrt-lxc.yml触发compile-lxc.yml编译
-# build-openwrt.yml触发compile.yml编译
+# build-lede-lxc.yml触发compile-lede-lxc.yml编译
+# build-lede.yml触发compile-lede.yml编译
+# build-openwrt.yml触发compile-openwrt.yml编译
 #=================================================
 
 
@@ -27,7 +28,6 @@ on:
         options:
           - 'x86_32'
           - 'x86_64'
-          - 'n1'
       FIRMWARE_TYPE:
         description: '选择固件类型'
         required: true
@@ -73,8 +73,10 @@ on:
         type: boolean
 
 # 定时触发开启开始编译(把下面两个#去掉开启,时间设置请看定时开启编译说明)
-  #schedule:
-   #- cron: 21 0 * * 5
+  schedule:
+   - cron: 30 0 * * 5
+   - cron: 0 18 * * 6
+
 
 # 注意：为保证触发正常，请修改BUILD_YML、COMPILE_YML、EVENT_TYPE，
 # BUILD_YML、COMPILE_YML为文件名；
