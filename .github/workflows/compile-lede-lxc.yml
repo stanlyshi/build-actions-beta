@@ -79,10 +79,10 @@ on:
    - cron: 0 22 * * 6
 
 env:
-  GITHUB_REPO_URL: https://github.com/${{github.repository}}
-  GITHUB_REPOSITORY: ${{github.repository}}
-  GITHUB_ACTOR: ${{github.actor}}
-  GITHUB_WORKFLOW: ${{github.workflow}}
+  GIT_REPO_URL: https://github.com/${{github.repository}}
+  GIT_REPOSITORY: ${{github.repository}}
+  GIT_ACTOR: ${{github.actor}}
+  GIT_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -102,7 +102,8 @@ jobs:
         target: [Lede_lxc]
         
         # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
-
+        # 对应build目录下的编译文件夹
+        
     steps:
     - name: 准备结束
       uses: actions/checkout@v3
