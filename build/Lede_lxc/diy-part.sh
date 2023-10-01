@@ -82,11 +82,11 @@ sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl .
 sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速" -rl ./`
 
 # 在线更新删除不想保留固件的某个文件，在EOF跟EOF直接加入删除代码，比如： rm /etc/config/luci，rm /etc/opkg/distfeeds.conf
-#cat >> ${FILE_DELETE} <<-EOF
+#cat >> ${FILES_TO_DELETE} <<-EOF
 #EOF
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间
-cat >> ${CLEAR_FILE} <<-EOF
+cat >> ${FILES_TO_CLEAR} <<-EOF
 packages
 config.buildinfo
 feeds.buildinfo
