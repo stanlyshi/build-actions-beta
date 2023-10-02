@@ -48,9 +48,9 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'        	# 设置ttyd免帐号
 uci commit ttyd
 EOF
 
-echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
+# echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
 # sed -i "s/OpenWrt ${GITHUB_ACTOR} compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
-sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
+# sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
 
 # x86机型,默认内核6.1，修改内核为6.1
 # echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
