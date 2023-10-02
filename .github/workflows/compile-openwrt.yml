@@ -81,10 +81,10 @@ on:
         type: boolean
 
 env:
-  GIT_REPO_URL: https://github.com/${{github.repository}}
-  GIT_REPOSITORY: ${{github.repository}}
-  GIT_ACTOR: ${{github.actor}}
-  GIT_WORKFLOW: ${{github.workflow}}
+  GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
+  GITHUB_REPOSITORY: ${{github.repository}}
+  GITHUB_ACTOR: ${{github.actor}}
+  GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -250,9 +250,9 @@ jobs:
       run: |
         mkdir -p Github_Api
         cd Github_Api
-        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o github_api
+        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o ${{ env.GITHUB_API }}
         if [[ $? -ne 0 ]]; then
-            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O github_api
+            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O ${{ env.GITHUB_API }}
         fi
 
     - name: 发布自动更新固件-编译信息
