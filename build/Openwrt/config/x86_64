@@ -20,9 +20,9 @@ CONFIG_PACKAGE_boost-system=y
 CONFIG_PACKAGE_btrfs-progs=y
 CONFIG_PACKAGE_cgi-io=y
 CONFIG_PACKAGE_dbus=y
+# CONFIG_PACKAGE_dnsmasq is not set
 CONFIG_PACKAGE_dnsmasq-full=y
 CONFIG_PACKAGE_dnsmasq_full_auth=y
-CONFIG_PACKAGE_dnsmasq_full_conntrack=y
 CONFIG_PACKAGE_dnsmasq_full_dhcp=y
 CONFIG_PACKAGE_dnsmasq_full_dhcpv6=y
 CONFIG_PACKAGE_dnsmasq_full_dnssec=y
@@ -195,3 +195,4 @@ CONFIG_boost-compile-visibility-hidden=y
 CONFIG_boost-runtime-shared=y
 CONFIG_boost-static-and-shared-libs=y
 CONFIG_boost-variant-release=y
+# CONFIG_PACKAGE_dnsmasq_full_conntrack is not set
