@@ -255,7 +255,7 @@ jobs:
             wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O ${{ env.GITHUB_API }}
         fi
 
-    - name: 发布自动更新固件-编译信息
+    - name: 发布自动更新固件-固件信息
       if: steps.compile.outcome == 'success'
       uses: ncipollo/release-action@main
       with:
