@@ -3,7 +3,7 @@
 echo "--------------diy_part_sh start--------------"
 echo
 echo "修改 IP设置"
-cat >> ${FILES_PATH}/etc/${FILENAME_DEFAULT_UCI} <<-EOF
+cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                 	# 删除wan口
 #uci delete network.wan6                               		# 删除wan6口
 uci delete network.lan.type                                 # 关闭桥接选项(同下步互斥)
@@ -86,7 +86,7 @@ sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速"
 #EOF
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间
-cat >> ${FILES_PATH}/etc/${FILENAME_TO_DELETE} <<-EOF
+cat >> ${FILES_TO_CLEAR} <<-EOF
 packages
 config.buildinfo
 feeds.buildinfo
