@@ -1,12 +1,2 @@
-1、luci-app-advanced
-2、luci-app-autoupdate
-3、luci-app-diskman
-4、luci-app-mosdns
-5、luci-app-pushbot
-6、luci-app-smartdns
-7、luci-app-ttyd
-8、luci-app-unblockneteasemusic
-9、luci-app-wolplus
-10、luci-theme-bootstrap
-11、luci-theme-material
-12、luci-theme-openwrt
+1、luci-app-autoupdate
+2、luci-app-ttyd
