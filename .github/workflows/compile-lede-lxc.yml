@@ -182,7 +182,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: "${{matrix.target}}-${{ env.TARGET_PROFILE }}"
+        mixkey: "${{ env.SOURCE }}-${{ env.LUCI_EDITION }}"
         prefix: ${{ env.HOME_PATH }}
         
     - name: 下载软件包
