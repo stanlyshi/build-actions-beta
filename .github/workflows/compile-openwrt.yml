@@ -230,7 +230,7 @@ jobs:
         tag: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
-        replacesArtifacts: true
+        removeArtifacts: true
         body: ${{ env.COMPILE_DATE_CN }}
         artifacts: "${{ env.FIRMWARE_PATH }}/*"
         
