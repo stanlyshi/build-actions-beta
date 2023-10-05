@@ -24,13 +24,13 @@ on:
       GITHUB_API:
         description: 'Github api文件名称'
         required: true
-        default: 'AutoUpdate-x86-lxc'
+        default: 'zzz_api'
         type: choice
         options:
-          - 'AutoUpdate-x86-lxc'
-          - 'AutoUpdate-x86'
-          - 'AutoUpdate-lxc'
-          - 'AutoUpdate'
+          - 'zzz_api'
+          - 'github_api'
+          - 'Github_Tags'
+
 env:
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
