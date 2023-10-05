@@ -47,16 +47,21 @@ jobs:
 
     - name: Download Github Release API
       run: |
-        wget https://api.github.com/repos/${{github.repository}}/releases/tags/${{ github.event.inputs.TAG_NAME }} -O ${{ github.event.inputs.GITHUB_API }}
-        
+        mkdir -p Github_Api
+        cd Github_Api
+        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o ${{ env.GITHUB_API }}
+        if [[ $? -ne 0 ]]; then
+            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O ${{ env.GITHUB_API }}
+        fi
+
     - name: Upload API to Github Release
-      uses: svenstaro/upload-release-action@v2
+      if: steps.compile.outcome == 'success'
+      uses: ncipollo/release-action@main
       with:
-        repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: ./Github_Tags
-        file_glob: true
-        tag: ${{ github.event.inputs.TAG_NAME }}
-        overwrite: true
+        allowUpdates: true
+        token: ${{ secrets.REPO_TOKEN }}
+        tag: ${{ env.RELEASE_TAG }}
+        artifacts: "Github_Api/*"
 
     - name: Delete old Workflow Runs
       uses: GitRML/delete-workflow-runs@main
