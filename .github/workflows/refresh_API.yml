@@ -46,7 +46,6 @@ jobs:
       uses: actions/checkout@main
 
     - name: Download Github Release API
-      id: download
       run: |
         mkdir -p Github_Api
         cd Github_Api
@@ -56,7 +55,6 @@ jobs:
         fi
 
     - name: Upload API to Github Release
-      if: steps.download.outcome == 'success'
       uses: ncipollo/release-action@main
       with:
         allowUpdates: true
