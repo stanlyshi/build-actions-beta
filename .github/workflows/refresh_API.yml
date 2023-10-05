@@ -61,7 +61,7 @@ jobs:
       with:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}
-        tag: ${{ env.RELEASE_TAG }}
+        tag: ${{ github.event.inputs.RELEASE_TAG }}
         artifacts: "Github_Api/*"
 
     - name: Delete old Workflow Runs
