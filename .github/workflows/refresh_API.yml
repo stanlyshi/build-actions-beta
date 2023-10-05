@@ -55,16 +55,16 @@ jobs:
         if [[ $? -ne 0 ]]; then
             wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ github.event.inputs.RELEASE_TAG }} -O ${{ github.event.inputs.GITHUB_API }}
         fi
-
+                
     - name: Upload API to Github Release
-      uses: ncipollo/release-action@main
-      if: steps.download.outcome == 'success'
+      uses: svenstaro/upload-release-action@v2
       with:
-        allowUpdates: true
-        token: ${{ secrets.REPO_TOKEN }}
+        repo_token: ${{ secrets.REPO_TOKEN }}
+        file: "Github_Api/*"
+        file_glob: true
         tag: ${{ github.event.inputs.RELEASE_TAG }}
-        artifacts: "Github_Api/*"
-
+        overwrite: true
+        
     - name: 清理Actions
       uses: Mattraks/delete-workflow-runs@v2
       with:
