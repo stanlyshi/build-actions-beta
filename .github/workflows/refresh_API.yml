@@ -64,8 +64,11 @@ jobs:
         tag: ${{ github.event.inputs.RELEASE_TAG }}
         artifacts: "Github_Api/*"
 
-    - name: Delete old Workflow Runs
-      uses: GitRML/delete-workflow-runs@main
+    - name: 清理Actions
+      if: env.REPO_TOKEN
+      uses: Mattraks/delete-workflow-runs@v2
       with:
-        retain_days: 1
-        keep_minimum_runs: 1
+          token: ${{ secrets.REPO_TOKEN }}
+          repository: ${{github.repository}}
+          keep_minimum_runs: 7
+          retain_days: 7
