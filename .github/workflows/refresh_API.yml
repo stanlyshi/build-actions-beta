@@ -11,7 +11,7 @@ on:
       refresh_switch:
         description: '手动刷新API'
         default: 'true'
-      TAG_NAME:
+      RELEASE_TAG:
         description: 'TAG名称'
         required: true
         default: 'AutoUpdate-x86-lxc'
