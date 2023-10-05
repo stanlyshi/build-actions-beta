@@ -58,6 +58,7 @@ jobs:
                 
     - name: Upload API to Github Release
       uses: svenstaro/upload-release-action@v2
+      if: steps.download.outcome == 'success'
       with:
         repo_token: ${{ secrets.REPO_TOKEN }}
         file: "Github_Api/*"
