@@ -66,7 +66,6 @@ jobs:
         artifacts: "Github_Api/*"
 
     - name: 清理Actions
-      if: env.REPO_TOKEN
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
