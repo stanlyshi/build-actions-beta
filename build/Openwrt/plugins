@@ -1,8 +1,8 @@
 1、luci-app-advanced
-2、luci-app-autoupdate
-3、luci-app-passwall
-4、luci-app-pushbot
-5、luci-app-smartdns
+2、luci-app-argon-config
+3、luci-app-autoupdate
+4、luci-app-passwall
+5、luci-app-pushbot
 6、luci-app-ssr-plus
 7、luci-app-ttyd
 8、luci-app-unblockneteasemusic
