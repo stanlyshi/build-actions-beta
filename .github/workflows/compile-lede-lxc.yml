@@ -80,6 +80,7 @@ on:
 env:
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
+  GITHUB_REPOSITORY_REF: ${{github.ref}}
   GITHUB_ACTOR: ${{github.actor}}
   GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
