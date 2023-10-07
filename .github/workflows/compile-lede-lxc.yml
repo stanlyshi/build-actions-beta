@@ -224,7 +224,7 @@ jobs:
       uses: ncipollo/release-action@main
       with:
         name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}
-        tag: ${{ env.SOURCE }}-${{ env.TARGET_PROFILE }}
+        tag: ${{ env.RELEASE_TAG }}
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
         removeArtifacts: true
@@ -238,7 +238,7 @@ jobs:
       with:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}
-        tag: ${{ env.RELEASE_TAG }}
+        tag: ${{ env.AUTOUPDATE_TAG }}
         bodyFile: "${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md"
         artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
         
@@ -247,9 +247,9 @@ jobs:
       run: |
         mkdir -p Github_Api
         cd Github_Api
-        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -o ${{ env.GITHUB_API }}
+        curl -H "Authorization: Bearer ${{ secrets.REPO_TOKEN }}" https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.AUTOUPDATE_TAG }} -o ${{ env.GITHUB_API }}
         if [[ $? -ne 0 ]]; then
-            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.RELEASE_TAG }} -O ${{ env.GITHUB_API }}
+            wget -q --no-cookie --no-check-certificate https://api.github.com/repos/${{github.repository}}/releases/tags/${{ env.AUTOUPDATE_TAG }} -O ${{ env.GITHUB_API }}
         fi
 
     - name: 发布自动更新固件-固件信息
@@ -258,7 +258,7 @@ jobs:
       with:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}
-        tag: ${{ env.RELEASE_TAG }}
+        tag: ${{ env.AUTOUPDATE_TAG }}
         bodyFile: "${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md"
         artifacts: "Github_Api/*"
         
