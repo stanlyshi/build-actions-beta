@@ -89,6 +89,8 @@ env:
   COMPILE_YML: compile-openwrt.yml
   EVENT_TYPE: 编译openwrt固件
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
+  GITHUB_REPOSITORY_REFNAME: ${{github.ref_name}}
+  GITHUB_REPOSITORY_REF: ${{github.ref}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_ACTOR: ${{github.actor}}
   GITHUB_WORKFLOW: ${{github.workflow}}
