@@ -86,6 +86,7 @@ env:
   COMPILE_YML: compile-lede.yml
   EVENT_TYPE: 编译lede固件
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
+  GITHUB_REPOSITORY_REFNAME: ${{github.ref_name}}
   GITHUB_REPOSITORY_REF: ${{github.ref}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_ACTOR: ${{github.actor}}
