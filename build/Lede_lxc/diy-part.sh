@@ -74,7 +74,7 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 #git clone --depth=1 https://github.com/fw876/helloworld
 
 #echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
-#find ${HOME_PATH}/feeds/luci -name "luci-theme-argon" | xargs sudo rm -rf
+#find ${HOME_PATH}/package/feeds/luci -name "luci-theme-argon" | xargs sudo rm -rf
 # lede源码对应主题
 #git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 # 官方源码对应主题
