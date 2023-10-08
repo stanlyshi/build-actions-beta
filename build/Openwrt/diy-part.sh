@@ -61,25 +61,23 @@ EOF
 # echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
 
 #############################################pushd#############################################
-# pushd feeds
+#cd ${HOME_PATH}
 
-#cd ./luci
+#cd ${HOME_PATH}/luci/applications
 
-#cd applications
 #echo "添加插件 luci-app-passwall"
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 #echo "添加插件 luci-app-ssr-plus"
 #git clone --depth=1 https://github.com/fw876/helloworld luci-app-ssr-plus
 
-#cd themes
+#cd ${HOME_PATH}/luci/themes
 
 #echo "添加主题 new theme neobird"
 #rm -rf ./luci-theme-neobird
 #git clone https://github.com/thinktip/luci-theme-neobird.git
 
-#cd ..
-# popd
+#cd ${HOME_PATH}
 #############################################popd#############################################
 
 # 在线更新删除不想保留固件的某个文件，在EOF跟EOF直接加入删除代码，比如： rm /etc/config/luci，rm /etc/opkg/distfeeds.conf
