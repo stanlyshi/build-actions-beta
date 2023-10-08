@@ -7,8 +7,8 @@ cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                 	# 删除wan口
 #uci delete network.wan6                               		# 删除wan6口
 #uci delete network.lan.type                                # 关闭桥接选项(同下步互斥)
-#uci set network.lan.type='bridge'                          # lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
-#uci set network.lan.proto='static'                   		# lan口静态IP
+uci set network.lan.type='bridge'                           # lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
+uci set network.lan.proto='static'                   		# lan口静态IP
 uci set network.lan.ipaddr='192.168.1.2'                 	# IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'             	# IPv4 子网掩码
 uci set network.lan.gateway='192.168.1.1'                	# IPv4 网关
@@ -27,9 +27,15 @@ uci commit network
 #uci set dhcp.lan.ignore='1'                             	# 关闭DHCP功能
 #uci set dhcp.@dnsmasq[0].filter_aaaa='1'                 	# DHCP/DNS→高级设置→解析 IPv6 DNS 记录——禁止
 #uci set dhcp.@dnsmasq[0].cachesize='0'                    	# DHCP/DNS→高级设置→DNS 查询缓存的大小——设置为'0'
-#uci add dhcp domain
+uci add dhcp domain
 #uci set dhcp.@domain[0].name='openwrt'                   	# 网络→主机名→主机目录——“openwrt”
 #uci set dhcp.@domain[0].ip='192.168.1.2'                 	# 对应IP解析——192.168.1.2
+#uci add dhcp domain
+#uci set dhcp.@domain[1].name='cdn.jsdelivr.net'          	# 网络→主机名→主机目录——“cdn.jsdelivr.net”
+#uci set dhcp.@domain[1].ip='104.16.86.20'                	# 对应IP解析——'104.16.86.20'
+#uci add dhcp domain
+#uci set dhcp.@domain[2].name='raw.githubusercontent.com' 	# 网络→主机名→主机目录——“raw.githubusercontent.com”
+#uci set dhcp.@domain[2].ip='185.199.109.133'             	# 对应IP解析——'185.199.109.133'
 uci commit dhcp
 
 #uci delete firewall.@defaults[0].syn_flood               	# 防火墙→SYN-flood 防御——关闭；默认开启
@@ -40,9 +46,7 @@ uci commit firewall
 uci commit dropbear
 
 uci set system.@system[0].hostname='OpenWrt'             	# 修改主机名称为OpenWrt
-uci commit system
-
-#uci set luci.main.mediaurlbase='/luci-static/argon'       	# 设置argon为默认主题
+uci set luci.main.mediaurlbase='/luci-static/argon'       	# 设置argon为默认主题
 uci commit luci
 
 uci set ttyd.@ttyd[0].command='/bin/login -f root'        	# 设置ttyd免帐号登录
