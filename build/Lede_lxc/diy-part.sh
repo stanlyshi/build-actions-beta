@@ -63,24 +63,28 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 #############################################pushd#############################################
 #cd ${HOME_PATH}
 
-#cd ${HOME_PATH}/luci/applications
+#cd ${HOME_PATH}/package
 
 #echo "添加插件 luci-app-passwall"
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 #echo "添加插件 luci-app-ssr-plus"
-#git clone --depth=1 https://github.com/fw876/helloworld luci-app-ssr-plus
+#git clone --depth=1 https://github.com/fw876/helloworld
 
-#cd ${HOME_PATH}/luci/themes
+#echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
+#find ${HOME_PATH}/feeds/luci -name "luci-theme-argon" | xargs sudo rm -rf
+# lede源码对应主题
+#git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+# 官方源码对应主题
+#git clone -b master https://github.com/jerrykuku/luci-theme-argon
 
 #echo "添加主题 new theme neobird"
-#rm -rf ./luci-theme-neobird
 #git clone https://github.com/thinktip/luci-theme-neobird.git
 
 #cd ${HOME_PATH}
 #############################################popd#############################################
 
-echo "修改插件名字"
+#echo "修改插件名字"
 #sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
 #sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速" -rl ./`
 

@@ -61,25 +61,27 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 #echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
 
 #############################################pushd#############################################
-# pushd feeds
+#cd ${HOME_PATH}
 
-#cd ./luci
+#cd ${HOME_PATH}/package
 
-#cd applications
 #echo "添加插件 luci-app-passwall"
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 #echo "添加插件 luci-app-ssr-plus"
-#git clone --depth=1 https://github.com/fw876/helloworld luci-app-ssr-plus
+#git clone --depth=1 https://github.com/fw876/helloworld
 
-#cd themes
+echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
+find ${HOME_PATH}/feeds/luci -name "luci-theme-argon" | xargs sudo rm -rf
+# lede源码对应主题
+#git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
+# 官方源码对应主题
+#git clone -b master https://github.com/jerrykuku/luci-theme-argon
 
 #echo "添加主题 new theme neobird"
-#rm -rf ./luci-theme-neobird
 #git clone https://github.com/thinktip/luci-theme-neobird.git
 
-#cd ..
-# popd
+#cd ${HOME_PATH}
 #############################################popd#############################################
 
 echo "修改插件名字"
