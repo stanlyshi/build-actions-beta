@@ -2,6 +2,8 @@
 
 echo "--------------diy_part_sh start--------------"
 echo
+cd ${HOME_PATH}
+
 echo "修改 IP设置"
 cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                 	# 删除wan口
@@ -90,15 +92,16 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 
 # 在线更新删除不想保留固件的某个文件，在EOF跟EOF直接加入删除代码，比如： rm /etc/config/luci，rm /etc/opkg/distfeeds.conf
 #cat >> ${FILES_TO_DELETE} <<-EOF
+#rm -rf /etc/coremark.sh
 #EOF
 
 # 整理固件包时候,删除您不想要的固件或者文件,让它不需要上传到Actions空间
 cat >> ${FILES_TO_CLEAR} <<-EOF
-packages
 config.buildinfo
 feeds.buildinfo
 openwrt-x86-64-generic-kernel.bin
 openwrt-x86-64-generic.manifest
+packages
 profiles.json
 sha256sums
 version.buildinfo
