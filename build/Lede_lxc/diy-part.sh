@@ -6,8 +6,8 @@ echo "修改 IP设置"
 cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                 	# 删除wan口
 #uci delete network.wan6                               		# 删除wan6口
-#uci delete network.lan.type                                # 关闭桥接选项(同下步互斥)
-uci set network.lan.type='bridge'                           # lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
+#uci delete network.lan.type                            	# 关闭桥接选项(同下步互斥)
+uci set network.lan.type='bridge'                      		# lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
 uci set network.lan.proto='static'                   		# lan口静态IP
 uci set network.lan.ipaddr='192.168.1.2'                 	# IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'             	# IPv4 子网掩码
@@ -61,25 +61,23 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 #echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
 
 #############################################pushd#############################################
-# pushd feeds
+#cd ${HOME_PATH}
 
-#cd ./luci
+#cd ${HOME_PATH}/luci/applications
 
-#cd applications
 #echo "添加插件 luci-app-passwall"
 #git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall
 
 #echo "添加插件 luci-app-ssr-plus"
 #git clone --depth=1 https://github.com/fw876/helloworld luci-app-ssr-plus
 
-#cd themes
+#cd ${HOME_PATH}/luci/themes
 
 #echo "添加主题 new theme neobird"
 #rm -rf ./luci-theme-neobird
 #git clone https://github.com/thinktip/luci-theme-neobird.git
 
-#cd ..
-# popd
+#cd ${HOME_PATH}
 #############################################popd#############################################
 
 echo "修改插件名字"
