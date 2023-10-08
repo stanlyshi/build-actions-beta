@@ -16,9 +16,8 @@
 16、luci-app-vlmcsd
 17、luci-app-webadmin
 18、luci-app-wechatpush
-19、luci-app-wireguard
-20、luci-app-wol
-21、luci-app-xlnetacc
-22、luci-app-zerotier
-23、luci-theme-argon
-24、luci-theme-bootstrap
+19、luci-app-wolplus
+20、luci-app-xlnetacc
+21、luci-app-zerotier
+22、luci-theme-argon
+23、luci-theme-bootstrap
