@@ -17,8 +17,8 @@
 | [![Mortal](https://img.shields.io/badge/source-Mortal-yellow.svg?style=flat&logo=appveyor)](https://github.com/immortalwrt/immortalwrt/tree/openwrt-21.02) | 21.02                             | 5.4                  |                         |
 | [![Tianling](https://img.shields.io/badge/source-Tianling-green.svg?style=flat&logo=appveyor)](https://github.com/immortalwrt/immortalwrt/tree/openwrt-18.06) | 18.06                             | 4.9、4.14、4.19      |                         |
 | [![Lede](https://img.shields.io/badge/source-Lede-deeppink.svg?style=flat&logo=appveyor)](https://github.com/coolsnowwolf/lede) | 18.06                             | 5.4、5.10、5.15、6.1 | N1和晶晨系列CPU盒子专用 |
-| [![openwrt](https://img.shields.io/badge/source-openwrt-blue.svg?style=flat&logo=appveyor)](https://github.com/openwrt/openwrt) | 17.01、18.06、19.07、21.02、22.03 | 5.15、6.1            | OpenWrt                 |
-| [![apps](https://img.shields.io/badge/packages-roa-orange.svg?style=flat&logo=appveyor)](https://github.com/roacn/openwrt-packages) | 18.06、19.07                      | 5.4、5.10、5.15、6.1 | 常用插件库              |
+| [![openwrt](https://img.shields.io/badge/source-openwrt-blue.svg?style=flat&logo=appveyor)](https://github.com/openwrt/openwrt) | 18.06、19.07、21.02、22.03、23.05 | 5.15、6.1            | OpenWrt                 |
+| [![apps](https://img.shields.io/badge/packages-roa-orange.svg?style=flat&logo=appveyor)](https://github.com/roacn/openwrt-packages) | 18.06、19.07、21.02、22.03、23.05 | 5.4、5.10、5.15、6.1 | 常用插件库              |
 | [![apps](https://img.shields.io/badge/applications-roa-blueviolet.svg?style=flat&logo=appveyor)](https://github.com/roacn/compile-packages) | 18.06、19.07                      | 5.4、5.10、5.15、6.1 | 插件编译，定时更新      |
 
 
