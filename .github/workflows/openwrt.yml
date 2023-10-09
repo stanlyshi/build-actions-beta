@@ -16,7 +16,7 @@ on:
       # 下拉列表设置为default，则相应选项使用settings.ini内设置
       # 需要更改，直接在下拉列表选择
       SOURCE_BRANCH:
-        description: 'Openwrt源码分支;default使用settings.ini设置'
+        description: 'Openwrt分支;default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice

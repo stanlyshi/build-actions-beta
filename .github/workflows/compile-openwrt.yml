@@ -16,10 +16,10 @@ on:
     types: [编译openwrt固件]
   workflow_dispatch:
     inputs:
-      # 以下设置为default，则相应选项使用settings.ini内设置
+      # 下拉列表设置为default，则相应选项使用settings.ini内设置
       # 需要更改，直接在下拉列表选择
       SOURCE_BRANCH:
-        description: '选择Openwrt源码分支'
+        description: 'Openwrt分支;default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
@@ -32,7 +32,7 @@ on:
           - 'main'
           - 'master'
       CONFIG_FILE:
-        description: '选择配置文件'
+        description: '配置文件'
         required: true
         default: 'default'
         type: choice
@@ -41,7 +41,7 @@ on:
           - 'x86_64'
           - 'x86_32'
       FIRMWARE_TYPE:
-        description: '选择固件类型'
+        description: '固件类型'
         required: true
         default: 'default'
         type: choice
@@ -50,7 +50,7 @@ on:
           - 'lxc'
           - 'kvm'
       BIOS_MODE:
-        description: '选择固件引导模式'
+        description: '固件引导模式'
         required: true
         default: 'default'
         type: choice
