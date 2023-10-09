@@ -41,6 +41,16 @@ on:
         options:
           - 'lxc'
           - 'kvm'
+      BIOS_MODE:
+        description: '选择固件引导模式'
+        required: true
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'uefi'
+          - 'legacy'
+          - 'both'
       NOTICE_TYPE:
         description: 'Telegram或pushplus信息通知'
         required: true
@@ -76,11 +86,13 @@ on:
         required: false
         default: 'true'
         type: boolean
+
 # 定时触发开启开始编译(把下面两个#去掉开启,时间设置请看定时开启编译说明)
   schedule:
    - cron: 30 5 * * 5
-   - cron: 0 23 * * 6
-   
+   - cron: 0 1 * * 0
+
+
 # 注意：为保证触发正常，请修改BUILD_YML、COMPILE_YML、EVENT_TYPE，
 # BUILD_YML、COMPILE_YML为文件名；
 # EVENT_TYPE为自定义事件类型，保证在上面2个文件内EVENT_TYPE定义一致，但要避免与其它文件内重复。
@@ -89,9 +101,9 @@ env:
   COMPILE_YML: compile-openwrt.yml
   EVENT_TYPE: 编译openwrt固件
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
+  GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_REPOSITORY_REFNAME: ${{github.ref_name}}
   GITHUB_REPOSITORY_REF: ${{github.ref}}
-  GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_ACTOR: ${{github.actor}}
   GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
@@ -124,7 +136,8 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         export INPUTS_SOURCE_BRANCH="${{ github.event.inputs.SOURCE_BRANCH }}"
         export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
-        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"        
+        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"
+        export INPUTS_BIOS_MODE="${{ github.event.inputs.BIOS_MODE }}"        
         export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
         export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"

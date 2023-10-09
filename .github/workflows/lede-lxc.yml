@@ -36,6 +36,16 @@ on:
         options:
           - 'lxc'
           - 'kvm'
+      BIOS_MODE:
+        description: '选择固件引导模式'
+        required: true
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'uefi'
+          - 'legacy'
+          - 'both'
       NOTICE_TYPE:
         description: 'Telegram或pushplus信息通知'
         required: true
@@ -121,7 +131,8 @@ jobs:
         cd ${GITHUB_WORKSPACE}
         export INPUTS_SOURCE_BRANCH="${{ github.event.inputs.SOURCE_BRANCH }}"
         export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
-        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"        
+        export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"
+        export INPUTS_BIOS_MODE="${{ github.event.inputs.BIOS_MODE }}"        
         export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
         export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
