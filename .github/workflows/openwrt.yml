@@ -13,10 +13,10 @@ name: 触发openwrt编译
 on:
   workflow_dispatch:
     inputs:
-      # 以下设置为default，则相应选项使用settings.ini内设置
+      # 下拉列表设置为default，则相应选项使用settings.ini内设置
       # 需要更改，直接在下拉列表选择
       SOURCE_BRANCH:
-        description: '选择Openwrt源码分支'
+        description: '选择Openwrt源码分支; default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
@@ -29,7 +29,7 @@ on:
           - 'main'
           - 'master'
       CONFIG_FILE:
-        description: '选择配置文件'
+        description: '选择配置文件; default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
@@ -38,7 +38,7 @@ on:
           - 'x86_64'
           - 'x86_32'
       FIRMWARE_TYPE:
-        description: '选择固件类型'
+        description: '选择固件类型; default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
@@ -47,7 +47,7 @@ on:
           - 'lxc'
           - 'kvm'
       BIOS_MODE:
-        description: '选择固件引导模式'
+        description: '选择固件引导模式; default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
@@ -57,7 +57,7 @@ on:
           - 'legacy'
           - 'both'
       NOTICE_TYPE:
-        description: 'Telegram或pushplus信息通知'
+        description: 'Telegram或pushplus信息通知; default使用settings.ini设置'
         required: true
         default: 'default'
         type: choice
