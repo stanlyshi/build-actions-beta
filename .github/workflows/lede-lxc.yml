@@ -13,27 +13,32 @@ name: 触发lede-lxc编译
 on:
   workflow_dispatch:
     inputs:
+      # 以下设置为default，则相应选项使用settings.ini内设置
+      # 需要更改，直接在下拉列表选择
       SOURCE_BRANCH:
         description: '选择Lede源码分支'
         required: true
-        default: 'master'
+        default: 'default'
         type: choice
         options:
+          - 'default'
           - 'master'
       CONFIG_FILE:
         description: '选择配置文件'
         required: true
-        default: 'x86_64'
+        default: 'default'
         type: choice
         options:
-          - 'x86_32'
+          - 'default'
           - 'x86_64'
+          - 'x86_32'
       FIRMWARE_TYPE:
         description: '选择固件类型'
         required: true
-        default: 'lxc'
+        default: 'default'
         type: choice
         options:
+          - 'default'
           - 'lxc'
           - 'kvm'
       BIOS_MODE:
@@ -49,9 +54,10 @@ on:
       NOTICE_TYPE:
         description: 'Telegram或pushplus信息通知'
         required: true
-        default: 'Telegram'
+        default: 'default'
         type: choice
         options:
+          - 'default'
           - 'Telegram'
           - 'Pushplus'
           - 'Wechat'
