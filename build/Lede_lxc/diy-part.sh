@@ -29,7 +29,7 @@ uci commit network
 #uci set dhcp.lan.ignore='1'                             	# 关闭DHCP功能
 #uci set dhcp.@dnsmasq[0].filter_aaaa='1'                 	# DHCP/DNS→高级设置→解析 IPv6 DNS 记录——禁止
 #uci set dhcp.@dnsmasq[0].cachesize='0'                    	# DHCP/DNS→高级设置→DNS 查询缓存的大小——设置为'0'
-uci add dhcp domain
+#uci add dhcp domain
 #uci set dhcp.@domain[0].name='openwrt'                   	# 网络→主机名→主机目录——“openwrt”
 #uci set dhcp.@domain[0].ip='192.168.1.2'                 	# 对应IP解析——192.168.1.2
 #uci add dhcp domain
@@ -48,6 +48,8 @@ uci commit firewall
 uci commit dropbear
 
 uci set system.@system[0].hostname='OpenWrt'             	# 修改主机名称为OpenWrt
+uci commit system
+
 uci set luci.main.mediaurlbase='/luci-static/argon'       	# 设置argon为默认主题
 uci commit luci
 
