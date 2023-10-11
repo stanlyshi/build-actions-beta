@@ -57,14 +57,16 @@ uci set ttyd.@ttyd[0].command='/bin/login -f root'        	# 设置ttyd免帐号
 uci commit ttyd
 EOF
 
-echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
-# sed -i "s/OpenWrt ${GITHUB_ACTOR} compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
-sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
+if [[ -n "${ZZZ_PATH}" ]]; then  
+	echo '增加个性名字 ${GITHUB_ACTOR} 默认为你的github帐号'
+	# sed -i "s/OpenWrt ${GITHUB_ACTOR} compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
+	sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${ZZZ_PATH}
+fi
 
 # x86机型,默认内核6.1，修改内核为6.1
 #echo NEW_KERNEL_PATCHVER="6.1" >> ${GITHUB_ENV}
 
-#############################################pushd#############################################
+#############################################################################################
 #cd ${HOME_PATH}
 
 #cd ${HOME_PATH}/package
@@ -75,8 +77,8 @@ sed -i "s/OpenWrt /Ss. compiled in $(TZ=UTC-8 date "+%Y.%m.%d") @ OpenWrt /g" ${
 #echo "添加插件 luci-app-ssr-plus"
 #git clone --depth=1 https://github.com/fw876/helloworld
 
-echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
-#find ${HOME_PATH}/package/feeds/luci -name "luci-theme-argon" | xargs sudo rm -rf
+#echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
+#find ${HOME_PATH}/package/feeds/luci -type d -name "luci-theme-argon" | xargs sudo rm -rf
 # lede源码对应主题
 #git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
 # 官方源码对应主题
@@ -86,9 +88,9 @@ echo "删除内置argon主题,使用原作者最新argon(已在插件源中下�
 #git clone https://github.com/thinktip/luci-theme-neobird.git
 
 #cd ${HOME_PATH}
-#############################################popd#############################################
+#############################################################################################
 
-echo "修改插件名字"
+#echo "修改插件名字"
 #sed -i 's/"Argon 主题设置"/"Argon设置"/g' `grep "Argon 主题设置" -rl ./`
 #sed -i 's/"Turbo ACC 网络加速"/"Turbo ACC"/g' `grep "Turbo ACC 网络加速" -rl ./`
 
