@@ -4,12 +4,12 @@ echo "--------------diy_part_sh start--------------"
 echo
 cd ${HOME_PATH}
 
-echo "修改 IP设置"
+echo "修改IP设置，固件首次运行一次性脚本"
 cat >> ${FILE_DEFAULT_UCI} <<-EOF
-#uci delete network.wan                                 	# 删除wan口
-#uci delete network.wan6                               		# 删除wan6口
-#uci delete network.lan.type                            	# 关闭桥接选项(同下步互斥)
-uci set network.lan.type='bridge'                      		# lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
+#uci delete network.wan                                     # 删除wan口
+#uci delete network.wan6                                    # 删除wan6口
+#uci delete network.lan.type                                # 关闭桥接选项(同下步互斥)
+#uci set network.lan.type='bridge'                          # lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
 uci set network.lan.proto='static'                   		# lan口静态IP
 uci set network.lan.ipaddr='192.168.1.2'                 	# IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'             	# IPv4 子网掩码
@@ -23,8 +23,8 @@ uci set network.lan.dns='223.5.5.5 114.114.114.114'       	# DNS(多个DNS要用
 #uci delete network.lan.ip6assign                        	# 接口→LAN→IPv6 分配长度——关闭，恢复uci set network.lan.ip6assign='64'
 uci commit network
 
-#uci delete dhcp.lan.ra                                 	# 路由通告服务，设置为“已禁用”
-#uci delete dhcp.lan.ra_management                      	# 路由通告服务，设置为“已禁用”
+#uci delete dhcp.lan.ra                                     # 路由通告服务，设置为“已禁用”
+#uci delete dhcp.lan.ra_management                          # 路由通告服务，设置为“已禁用”
 #uci delete dhcp.lan.dhcpv6                               	# DHCPv6 服务，设置为“已禁用”
 #uci set dhcp.lan.ignore='1'                             	# 关闭DHCP功能
 #uci set dhcp.@dnsmasq[0].filter_aaaa='1'                 	# DHCP/DNS→高级设置→解析 IPv6 DNS 记录——禁止
