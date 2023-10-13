@@ -3,11 +3,11 @@
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: GNU General Public License v3.0
 # Author: Ss.
-# build-lede-lxc.yml触发compile-lede-lxc.yml编译
-# build-lede.yml触发compile-lede.yml编译
-# build-openwrt.yml触发compile-openwrt.yml编译
+# build-lede-lxc.yml	触发	compile-lede-lxc.yml
+# build-lede.yml	触发	compile-lede.yml
+# build-openwrt.yml	触发	compile-openwrt.yml
+# build-openwrt-lxc.yml	触发	compile-openwrt-lxc.yml
 #=================================================
-
 
 
 name: 编译lede-lxc固件
