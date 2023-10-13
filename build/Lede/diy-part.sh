@@ -4,7 +4,7 @@ echo "--------------diy_part_sh start--------------"
 echo
 cd ${HOME_PATH}
 
-echo "修改 IP设置"
+echo "修改IP设置，固件首次运行一次性脚本"
 cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan                                         # 删除wan口
 #uci delete network.wan6                                        # 删除wan6口
@@ -13,7 +13,7 @@ cat >> ${FILE_DEFAULT_UCI} <<-EOF
 uci set network.lan.proto='static'                              # lan口静态IP
 uci set network.lan.ipaddr='192.168.1.2'                        # IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'                     # IPv4 子网掩码
-uci set network.lan.gateway='192.168.1.1'                	# IPv4 网关
+uci set network.lan.gateway='192.168.1.1'                       # IPv4 网关
 uci set network.lan.broadcast='192.168.1.255'                   # IPv4 广播
 uci set network.lan.dns='223.5.5.5 114.114.114.114'             # DNS(多个DNS要用空格分开)
 #uci set network.lan.delegate='0'                               # 去掉LAN口使用内置的 IPv6 管理
