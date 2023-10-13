@@ -77,7 +77,7 @@ fi
 #echo "添加插件 luci-app-ssr-plus"
 #git clone --depth=1 https://github.com/fw876/helloworld
 
-#echo "删除内置argon主题,使用原作者最新argon(已在插件源中下载)"
+#echo "删除内置argon主题,使用原作者最新argon"
 #find ${HOME_PATH}/package/feeds/luci -type d -name "luci-theme-argon" | xargs sudo rm -rf
 # lede源码对应主题
 #git clone -b 18.06 https://github.com/jerrykuku/luci-theme-argon
