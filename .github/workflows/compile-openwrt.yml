@@ -119,7 +119,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Openwrt_lxc]
+        target: [Openwrt]
         
         # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
         # 对应build目录下的编译文件夹
