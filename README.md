@@ -1,6 +1,7 @@
 ![lede-x86](https://github.com/stanlyshi/build-actions-beta/workflows/编译lede固件/badge.svg?)
 ![lede-x86-lxc](https://github.com/stanlyshi/build-actions-beta/workflows/编译lede-lxc固件/badge.svg?)
 ![openwrt-x86](https://github.com/stanlyshi/build-actions-beta/workflows/编译openwrt固件/badge.svg?)
+![openwrt-x86-lxc](https://github.com/stanlyshi/build-actions-beta/workflows/编译openwrt-lxc固件/badge.svg?)
 
 
 
