@@ -36,6 +36,7 @@ on:
           - 'default'
           - 'x86_64'
           - 'x86_32'
+          - '.config'
       FIRMWARE_TYPE:
         description: '固件类型'
         required: true
