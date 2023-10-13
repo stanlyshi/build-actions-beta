@@ -9,11 +9,11 @@
 #=================================================
 
 
-name: 编译openwrt-lxc固件
+name: 编译openwrt固件
 on:
   repository_dispatch:
     # 触发类型可以自定义，但须对应触发.yml文件内相同，例如：编译openwrt固件
-    types: [编译openwrt-lxc固件]
+    types: [编译openwrt固件]
   workflow_dispatch:
     inputs:
       # 下拉列表设置为default，则相应选项使用settings.ini内设置
@@ -119,7 +119,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [Openwrt_lxc]
+        target: [Openwrt]
         
         # [Lede,Lede_lxc,Openwrt,Openwrt_lxc]
         # 对应build目录下的编译文件夹
