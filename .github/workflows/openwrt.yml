@@ -160,7 +160,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && init_environment
-        
+
     - name: 下载"${{matrix.target}}"源码
       working-directory: /${{matrix.target}}
       run: |
@@ -170,11 +170,11 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
-      
+
     - name: SSH远程连接（make menuconfig）
       if: env.ENABLE_SSH == 'true'
       uses: danshui-git/debugger-action@main
-      
+
     - name: 生成"${{matrix.target}}"配置文件
       if: env.REPO_TOKEN
       id: makedeconfig
@@ -198,12 +198,7 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
-        
-  compile-dispatch:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-    steps:
+
     - name: 触发yml启动"${{matrix.target}}"编译
       continue-on-error: true
       run: |
