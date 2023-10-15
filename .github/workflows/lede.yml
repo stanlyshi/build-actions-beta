@@ -6,7 +6,7 @@
 #=================================================
 
 
-name: Lede固件
+name: 启动Lede编译
 on:
   workflow_dispatch:
     inputs:

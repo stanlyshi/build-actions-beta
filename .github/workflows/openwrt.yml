@@ -6,7 +6,7 @@
 #=================================================
 
 
-name: Openwrt固件
+name: 启动Openwrt编译
 on:
   workflow_dispatch:
     inputs:

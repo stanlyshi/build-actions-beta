@@ -6,7 +6,7 @@
 #=================================================
 
 
-name: Openwrt固件[lxc]
+name: 启动openwrt-lxc编译
 on:
   workflow_dispatch:
     inputs:
