@@ -3,10 +3,6 @@
 # Description: Build OpenWrt using GitHub Actions
 # Lisence: GNU General Public License v3.0
 # Author: Ss.
-# build-lede-lxc.yml	触发	compile-lede-lxc.yml
-# build-lede.yml	触发	compile-lede.yml
-# build-openwrt.yml	触发	compile-openwrt.yml
-# build-openwrt-lxc.yml	触发	compile-openwrt-lxc.yml
 #=================================================
 
 
@@ -104,9 +100,6 @@ on:
 # BUILD_YML、COMPILE_YML为文件名；
 # EVENT_TYPE为自定义事件类型，保证在上面2个文件内EVENT_TYPE定义一致，但要避免与其它文件内重复。
 env:
-  BUILD_YML: openwrt-lxc.yml
-  COMPILE_YML: compile-openwrt-lxc.yml
-  EVENT_TYPE: 编译openwrt-lxc固件
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_REPOSITORY_REFNAME: ${{github.ref_name}}
@@ -204,21 +197,17 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
         
-  compile-dispatch:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-    steps:
-    - name: 触发yml启动"${{matrix.target}}"编译
+    - name: 启动"${{matrix.target}}"编译
       continue-on-error: true
       run: |
         curl \
         -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
         -H "Accept: application/vnd.github.everest-preview+json" \
         -H "Authorization: token ${{ secrets.REPO_TOKEN }}" \
-        -d '{"event_type": "${{ env.EVENT_TYPE }}"}'
+        -d '{"event_type": "编译${{ env.MATRIX_TARGET }}固件", "client_payload": {"target": "${{ env.MATRIX_TARGET }}"}}'
         
   delete-releases-artifacts:
+    needs: [build]
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
     steps:        
