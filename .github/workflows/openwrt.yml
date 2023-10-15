@@ -197,12 +197,7 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
         
-  compile-dispatch:
-    needs: [build]
-    runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-    steps:
-    - name: 触发yml启动"${{matrix.target}}"编译
+    - name: 启动"${{matrix.target}}"编译
       continue-on-error: true
       run: |
         curl \
