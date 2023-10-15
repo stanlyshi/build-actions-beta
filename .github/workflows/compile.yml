@@ -9,7 +9,7 @@
 name: compile
 on:
   repository_dispatch:
-    types: [compile_openwrt,compile_openwrt_lxc,compile_lede,compile_lede_lxc]
+    types: [编译Lede固件,编译Lede_lxc固件,编译Openwrt固件,编译Openwrt_lxc固件]
   workflow_dispatch:
     inputs:
       # 下拉列表设置为default，则相应选项使用settings.ini内设置

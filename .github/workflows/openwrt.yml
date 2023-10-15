@@ -100,14 +100,12 @@ on:
 # BUILD_YML、COMPILE_YML为文件名；
 # EVENT_TYPE为自定义事件类型，保证在上面2个文件内EVENT_TYPE定义一致，但要避免与其它文件内重复。
 env:
-  BUILD_YML: openwrt.yml
-  COMPILE_YML: compile-openwrt.yml
-  EVENT_TYPE: compile_openwrt
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}
   GITHUB_REPOSITORY_REFNAME: ${{github.ref_name}}
   GITHUB_REPOSITORY_REF: ${{github.ref}}
   GITHUB_ACTOR: ${{github.actor}}
+  GITHUB_WORKFLOW: ${{github.workflow}}
   REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
@@ -160,7 +158,7 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && init_environment
-
+        
     - name: 下载"${{matrix.target}}"源码
       working-directory: /${{matrix.target}}
       run: |
@@ -170,11 +168,11 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && do_diy
-
+      
     - name: SSH远程连接（make menuconfig）
       if: env.ENABLE_SSH == 'true'
       uses: danshui-git/debugger-action@main
-
+      
     - name: 生成"${{matrix.target}}"配置文件
       if: env.REPO_TOKEN
       id: makedeconfig
@@ -198,7 +196,12 @@ jobs:
       if: env.REPO_TOKEN
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && update_repo
-
+        
+  compile-dispatch:
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
+    steps:
     - name: 触发yml启动"${{matrix.target}}"编译
       continue-on-error: true
       run: |
@@ -206,7 +209,7 @@ jobs:
         -X POST https://api.github.com/repos/${{ github.repository }}/dispatches \
         -H "Accept: application/vnd.github.everest-preview+json" \
         -H "Authorization: token ${{ secrets.REPO_TOKEN }}" \
-        -d '{"event_type": "${{ env.EVENT_TYPE }}", "client_payload": {"target": "${{matrix.target}}"}}'
+        -d '{"event_type": "编译${{ env.MATRIX_TARGET }}固件", "client_payload": {"target": "${{ env.MATRIX_TARGET }}"}}'
         
   delete-releases-artifacts:
     runs-on: ubuntu-latest
