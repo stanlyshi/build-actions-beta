@@ -164,7 +164,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}
         tag: ${{ env.AUTOUPDATE_TAG }}
-        bodyFile: "${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md"
+        bodyFile: "${{ env.RELEASEINFO_MD }}"
         artifacts: "${{ env.AUTOUPDATE_PATH }}/*"
         
     - name: 发布自动更新固件-获取API
@@ -184,7 +184,7 @@ jobs:
         allowUpdates: true
         token: ${{ secrets.REPO_TOKEN }}
         tag: ${{ env.AUTOUPDATE_TAG }}
-        bodyFile: "${{ env.MATRIX_TARGET_PATH }}/releaseinfo.md"
+        bodyFile: "${{ env.RELEASEINFO_MD }}"
         artifacts: "Github_Api/*"
         
     - name: 编译完成TG或pushplus通知
