@@ -10,16 +10,18 @@ cat >> ${FILE_DEFAULT_UCI} <<-EOF
 #uci delete network.wan6                                        # 删除wan6口
 #uci delete network.lan.type                                    # 关闭桥接选项(同下步互斥)
 #uci set network.lan.type='bridge'                              # lan口桥接(单LAN口无需桥接，多LAN口必须桥接，同上步互斥)
+#uci set network.lan.ifname='eth0 eth1'                         # 设置lan口物理接口为eth0、eth1
+uci set network.lan.ifname='eth0'                               # 设置lan口物理接口为eth0
 uci set network.lan.proto='static'                              # lan口静态IP
 uci set network.lan.ipaddr='192.168.1.2'                        # IPv4 地址(openwrt后台地址)
 uci set network.lan.netmask='255.255.255.0'                     # IPv4 子网掩码
 uci set network.lan.gateway='192.168.1.1'                       # IPv4 网关
 uci set network.lan.broadcast='192.168.1.255'                   # IPv4 广播
-uci set network.lan.dns='223.5.5.5 114.114.114.114'             # DNS(多个DNS要用空格分开)
-#uci set network.lan.delegate='0'                               # 去掉LAN口使用内置的 IPv6 管理
-#uci set network.lan.ifname='eth0'                              # 设置lan口物理接口为eth0
-#uci set network.lan.ifname='eth0 eth1'                         # 设置lan口物理接口为eth0、eth1
+uci add_list network.lan.dns='223.5.5.5'                        # OpenWrt官方源码，dns设置
+uci add_list network.lan.dns='114.114.114.114'                  # OpenWrt官方源码，dns设置
+#uci set network.lan.dns='223.5.5.5 114.114.114.114'            # DNS(多个DNS要用空格分开)
 #uci set network.lan.mtu='1492'                                 # lan口mtu设置为1492
+#uci set network.lan.delegate='0'                               # 去掉LAN口使用内置的 IPv6 管理
 #uci delete network.lan.ip6assign                               # 接口→LAN→IPv6 分配长度——关闭，恢复uci set network.lan.ip6assign='64'
 uci commit network
 
@@ -48,6 +50,8 @@ uci commit firewall
 uci commit dropbear
 
 uci set system.@system[0].hostname='OpenWrt'                    # 修改主机名称为OpenWrt
+uci set system.@system[0].timezone='CST-8'                      # 设置时区为CST-8
+uci set system.@system[0].zonename='Asia/Shanghai'              # 设置时区显示为Asia/Shanghai
 uci commit system
 
 uci set luci.main.mediaurlbase='/luci-static/argon'             # 设置argon为默认主题
