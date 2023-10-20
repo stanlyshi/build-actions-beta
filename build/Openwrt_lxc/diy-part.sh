@@ -50,6 +50,8 @@ uci commit firewall
 uci commit dropbear
 
 uci set system.@system[0].hostname='OpenWrt'                    # 修改主机名称为OpenWrt
+uci set system.@system[0].timezone='CST-8'                      # 设置时区为CST-8
+uci set system.@system[0].zonename='Asia/Shanghai'              # 设置时区显示为Asia/Shanghai
 uci commit system
 
 uci set luci.main.mediaurlbase='/luci-static/argon'             # 设置argon为默认主题

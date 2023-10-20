@@ -91,9 +91,6 @@ on:
    - cron: 30 0 * * 2,4
 
 
-# 注意：为保证触发正常，请修改BUILD_YML、COMPILE_YML、EVENT_TYPE，
-# BUILD_YML、COMPILE_YML为文件名；
-# EVENT_TYPE为自定义事件类型，保证在上面2个文件内EVENT_TYPE定义一致，但要避免与其它文件内重复。
 env:
   GITHUB_REPOSITORY_URL: https://github.com/${{github.repository}}
   GITHUB_REPOSITORY: ${{github.repository}}

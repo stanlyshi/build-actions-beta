@@ -1,7 +1,9 @@
-###########################################################
-#   Description: Refresh Release API                      #
-#   Author: Hyy2001X                                      #
-###########################################################
+#=================================================
+# https://github.com/roacn/build-actions
+# Description: Refresh github release api files
+# Lisence: GNU General Public License v3.0
+# Author: Ss.
+#=================================================
 
 name: 刷新ReleaseAPI
 
@@ -65,7 +67,7 @@ jobs:
         tag: ${{ github.event.inputs.RELEASE_TAG }}
         overwrite: true
         
-    - name: 清理Actions
+    - name: Clean Actions
       uses: Mattraks/delete-workflow-runs@v2
       with:
           token: ${{ secrets.REPO_TOKEN }}
