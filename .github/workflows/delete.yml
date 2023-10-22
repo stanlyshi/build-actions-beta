@@ -10,8 +10,8 @@ on:
   workflow_dispatch:
     inputs:
       DELETE_ARTIFACTS:
-        description: '是否删除Workflow'
-        required: false
+        description: '删除Workflow开关'
+        required: true
         default: 'true'
         type: boolean
       KEEP_DAY:
@@ -25,14 +25,14 @@ on:
         default: '1'
         type: string
       DELETE_RELEASE:
-        description: '是否删除Release'
-        required: false
+        description: '删除Release开关'
+        required: true
         default: 'true'
         type: boolean
       KEEP_MININUM_RELEASE:
         description: 'Release最少保留数量'
         required: true
-        default: '1'
+        default: '7'
         type: string
 
 jobs:
