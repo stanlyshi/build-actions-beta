@@ -8,13 +8,32 @@ name: 删除releases与workflows
 
 on:
   workflow_dispatch:
-
-env:
-  DELETE_RELEASE: true
-  DELETE_ARTIFACTS: true
-  KEEP_DAY: 1
-  KEEP_MININUM_RUNS: 0
-  KEEP_MININUM_RELEASE: 7
+    inputs:
+      DELETE_ARTIFACTS:
+        description: '是否删除Workflow'
+        required: false
+        default: 'true'
+        type: boolean
+      KEEP_DAY:
+        description: 'Workflow保留天数'
+        required: true
+        default: '1'
+        type: string
+      KEEP_MININUM_RUNS:
+        description: 'Workflow最少保留数量'
+        required: true
+        default: '1'
+        type: string
+      DELETE_RELEASE:
+        description: '是否删除Release'
+        required: false
+        default: 'true'
+        type: boolean
+      KEEP_MININUM_RELEASE:
+        description: 'Release最少保留数量'
+        required: true
+        default: '1'
+        type: string
 
 jobs:
   build:
@@ -25,20 +44,20 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
 
-    - name: Delete older releases
-      uses: dev-drprasad/delete-older-releases@master
-      if: env.DELETE_RELEASE == 'true'
-      with:
-        keep_latest: ${{ env.KEEP_MININUM_RELEASE }}
-        delete_tags: true
-      env:
-        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
-
     - name: Delete older workflow runs and artifacts
       uses: Mattraks/delete-workflow-runs@main
-      if: env.DELETE_ARTIFACTS == 'true'
+      if: ${{ github.event.inputs.DELETE_ARTIFACTS }} == 'true'
       with:
         token: ${{ secrets.REPO_TOKEN }}
         repository: ${{ github.repository }}
-        retain_days: ${{ env.KEEP_DAY }}
-        keep_minimum_runs: ${{ env.KEEP_MININUM_RUNS }}
+        retain_days: ${{ github.event.inputs.KEEP_DAY }}
+        keep_minimum_runs: ${{ github.event.inputs.KEEP_MININUM_RUNS }}
+
+    - name: Delete older releases
+      uses: dev-drprasad/delete-older-releases@master
+      if: ${{ github.event.inputs.DELETE_RELEASE }} == 'true'
+      with:
+        keep_latest: ${{ github.event.inputs.KEEP_MININUM_RELEASE }}
+        delete_tags: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
