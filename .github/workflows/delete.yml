@@ -46,7 +46,7 @@ jobs:
 
     - name: Delete older workflow runs and artifacts
       uses: Mattraks/delete-workflow-runs@main
-      if: ${{ github.event.inputs.DELETE_ARTIFACTS }} == 'true'
+      if: github.event.inputs.DELETE_ARTIFACTS == 'true'
       with:
         token: ${{ secrets.REPO_TOKEN }}
         repository: ${{ github.repository }}
@@ -55,7 +55,7 @@ jobs:
 
     - name: Delete older releases
       uses: dev-drprasad/delete-older-releases@master
-      if: ${{ github.event.inputs.DELETE_RELEASE }} == 'true'
+      if: github.event.inputs.DELETE_RELEASE == 'true'
       with:
         keep_latest: ${{ github.event.inputs.KEEP_MININUM_RELEASE }}
         delete_tags: true
