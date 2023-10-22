@@ -8,7 +8,9 @@ luci-app-firewall
 luci-app-mosdns
 luci-app-passwall
 luci-app-pushbot
+luci-app-qbittorrent
 luci-app-rebootschedule
+luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
 luci-app-ttyd
