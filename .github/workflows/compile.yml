@@ -29,6 +29,7 @@ jobs:
   build:
     name: 编译 "${{matrix.target}}"
     runs-on: ubuntu-latest
+    timeout-minutes: 600
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
     env:
       MATRIX_TARGET: ${{matrix.target}}
@@ -40,6 +41,7 @@ jobs:
     steps:
     - name: 准备结束
       uses: actions/checkout@v4
+      fetch-depth: 0
 
     - name: 获取设置
       run: |
