@@ -105,7 +105,7 @@ jobs:
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: "${{ env.MATRIX_TARGET }}-${{ env.LUCI_EDITION }}-${{ env.TARGET_PROFILE }}"
+        mixkey: "${{ env.MATRIX_TARGET }}"
         prefix: ${{ env.HOME_PATH }}
         
     - name: 下载软件包
