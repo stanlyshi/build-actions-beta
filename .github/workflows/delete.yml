@@ -22,7 +22,7 @@ on:
       KEEP_MININUM_RUNS:
         description: 'Workflow最少保留数量'
         required: true
-        default: '1'
+        default: '0'
         type: string
       DELETE_RELEASE:
         description: '删除Release开关'
