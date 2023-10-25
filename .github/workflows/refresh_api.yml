@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
     inputs:
       REFRESH_API:
-        description: '刷新Release api文件'
+        description: '当release发布固件有手动增删时，用此手动刷新Release api文件'
         default: 'true'
       RELEASE_TAG:
         description: '选择Release tag名称'

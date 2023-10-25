@@ -1,7 +1,5 @@
 #=======================================================================================================================
-# Description: Automatically delete older releases and artifacts
-# Function: Delete older releases and artifacts
-# Cron: min (0 - 59) / hour (0 - 23) / day of month (1 - 31) / month (1 - 12) / day of week (0 - 6)(Sunday - Saturday)
+# Description: Delete older releases and artifacts
 #=======================================================================================================================
 
 name: 删除releases与workflows
@@ -34,16 +32,16 @@ on:
         required: true
         default: '7'
         type: string
-
+        
 jobs:
   build:
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
-
+    
     steps:
     - name: Checkout
       uses: actions/checkout@main
-
+      
     - name: Delete older workflow runs and artifacts
       uses: Mattraks/delete-workflow-runs@main
       if: github.event.inputs.DELETE_ARTIFACTS == 'true'
@@ -52,7 +50,7 @@ jobs:
         repository: ${{ github.repository }}
         retain_days: ${{ github.event.inputs.KEEP_DAY }}
         keep_minimum_runs: ${{ github.event.inputs.KEEP_MININUM_RUNS }}
-
+        
     - name: Delete older releases
       uses: dev-drprasad/delete-older-releases@master
       if: github.event.inputs.DELETE_RELEASE == 'true'
@@ -61,3 +59,4 @@ jobs:
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
+        
