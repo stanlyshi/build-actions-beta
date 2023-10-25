@@ -104,7 +104,7 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && compile_info
         
     - name: 缓存加速
-      if: env.ENABLE_CACHEWRTBUILD == 'true'
+      if: env.ENABLE_CACHEWRTBUILD == 'true' || env.ENABLE_CACHEWRTBUILD == 'normal' || env.ENABLE_CACHEWRTBUILD == 'fast'
       uses: stupidloud/cachewrtbuild@main
       with:
         ccache: 'true'
