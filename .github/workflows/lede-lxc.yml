@@ -49,7 +49,7 @@ on:
           - 'uefi'
           - 'legacy'
           - 'both'
-      ENABLE_CACHEWRTBUILD:
+      ENABLE_CCACHE:
         description: '缓存加速'
         required: true
         default: 'default'
@@ -140,7 +140,7 @@ jobs:
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
         export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
         export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
-        export INPUTS_ENABLE_CACHEWRTBUILD="${{ github.event.inputs.ENABLE_CACHEWRTBUILD }}"
+        export INPUTS_ENABLE_CCACHE="${{ github.event.inputs.ENABLE_CCACHE }}"
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
         curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh

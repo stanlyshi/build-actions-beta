@@ -87,14 +87,6 @@ jobs:
       working-directory: /${{matrix.target}}
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && git_clone_source
-
-    - name: 缓存加速
-      if: env.ENABLE_CACHEWRTBUILD == 'true' || env.ENABLE_CACHEWRTBUILD == 'normal' || env.ENABLE_CACHEWRTBUILD == 'fast'
-      uses: stupidloud/cachewrtbuild@main
-      with:
-        ccache: 'true'
-        mixkey: "${{ env.MATRIX_TARGET }}"
-        prefix: ${{ env.HOME_PATH }}
         
     - name: 更新源,补丁和自定义设置
       if: env.REPO_TOKEN
@@ -110,6 +102,14 @@ jobs:
       continue-on-error: true
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && compile_info
+        
+    - name: 缓存加速
+      if: env.ENABLE_CCACHE == 'true' || env.ENABLE_CCACHE == 'normal' || env.ENABLE_CCACHE == 'fast'
+      uses: stupidloud/cachewrtbuild@main
+      with:
+        ccache: 'true'
+        mixkey: "${{ env.MATRIX_TARGET }}"
+        prefix: ${{ env.HOME_PATH }}
         
     - name: 下载软件包
       id: package
