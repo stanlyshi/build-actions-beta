@@ -63,7 +63,7 @@ jobs:
         source ${GITHUB_WORKSPACE}/common.sh && update_packages
 
     - name: 编译开始TG或pushplus通知
-      if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
+      if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_CHAT_ID && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && notice_begin
 
@@ -187,7 +187,7 @@ jobs:
         artifacts: "Github_Api/*"
         
     - name: 编译完成TG或pushplus通知
-      if: steps.compile.outcome == 'success' && env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || steps.compile.outcome == 'success' && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
+      if: steps.compile.outcome == 'success' && env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || steps.compile.outcome == 'success' && env.TELEGRAM_CHAT_ID && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && notice_end
         
