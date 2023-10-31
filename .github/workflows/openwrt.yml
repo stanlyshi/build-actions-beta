@@ -73,7 +73,6 @@ on:
           - 'default'
           - 'Telegram'
           - 'Pushplus'
-          - 'Wechat'
           - 'false'
       ENABLE_SSH:
         description: '开启SSH远程配置'

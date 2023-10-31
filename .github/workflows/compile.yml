@@ -55,13 +55,7 @@ jobs:
         fi
         chmod +x ${GITHUB_WORKSPACE}/common.sh
         source ${GITHUB_WORKSPACE}/common.sh && parse_settings
-
-    - name: 更新插件库
-      continue-on-error: true
-      if: env.ENABLE_PACKAGES_UPDATE == 'true'
-      run: |
-        source ${GITHUB_WORKSPACE}/common.sh && update_packages
-
+        
     - name: 编译开始TG或pushplus通知
       if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_CHAT_ID && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
