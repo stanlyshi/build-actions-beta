@@ -1,11 +1,8 @@
-luci-app-adbyby-plus
+luci-app-advanced
 luci-app-aliyundrive-webdav
 luci-app-argon-config
 luci-app-autoupdate
-luci-app-diskman
 luci-app-dockerman
-luci-app-filebrowser
-luci-app-filetransfer
 luci-app-firewall
 luci-app-mosdns
 luci-app-opkg
@@ -16,7 +13,6 @@ luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
 luci-app-ttyd
-luci-app-turboacc
 luci-app-unblockmusic
 luci-app-wechatpush
 luci-app-wolplus
