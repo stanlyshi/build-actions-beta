@@ -48,7 +48,7 @@ jobs:
       run: |
         cd ${GITHUB_WORKSPACE}
         cpu_name=$(cat /proc/cpuinfo | grep name | cut -d: -f2 | uniq | sed 's/^[[:space:]]\+//')
-        echo "::notice title=CPU::$cpu_name"
+        echo "::notice ::${cpu_name}"
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
         curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh
         if [[ $? -ne 0 ]]; then
