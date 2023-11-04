@@ -110,7 +110,7 @@ env:
 
 jobs:
   build:
-    name: 编译 "${{matrix.target}}"
+    name: Build ${{matrix.target}}
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
     env:
@@ -130,9 +130,6 @@ jobs:
     - name: 获取设置
       run: |
         cd ${GITHUB_WORKSPACE}
-        cpu_name=$(cat /proc/cpuinfo | grep name | cut -d: -f2 | uniq | sed 's/^[[:space:]]\+//')
-        echo "::notice title=CPU::${cpu_name}"
-        
         export INPUTS_SOURCE_BRANCH="${{ github.event.inputs.SOURCE_BRANCH }}"
         export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
         export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"
@@ -212,6 +209,7 @@ jobs:
         -d '{"event_type": "编译${{ env.MATRIX_TARGET }}固件", "client_payload": {"target": "${{ env.MATRIX_TARGET }}"}}'
         
   delete-releases-artifacts:
+    name: Delete releases artifacts
     needs: [build]
     runs-on: ubuntu-latest
     if: github.event.repository.owner.id == github.event.sender.id
