@@ -9,11 +9,16 @@ luci-app-opkg
 luci-app-p910nd
 luci-app-passwall
 luci-app-pushbot
+luci-app-quickstart
 luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
+luci-app-store
 luci-app-ttyd
 luci-app-wechatpush
+luci-app-wechatpush_Enable_Traffic_Monitoring
+luci-app-wechatpush_Local_Disk_Information_Detection
+luci-app-wechatpush_Host_Information_Detection
 luci-app-wolplus
 luci-theme-argon
 luci-theme-bootstrap
