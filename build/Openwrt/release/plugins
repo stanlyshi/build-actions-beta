@@ -9,7 +9,6 @@ luci-app-opkg
 luci-app-p910nd
 luci-app-passwall
 luci-app-pushbot
-luci-app-quickstart
 luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
