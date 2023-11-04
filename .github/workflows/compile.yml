@@ -104,6 +104,7 @@ jobs:
       continue-on-error: true
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && compile_info
+        echo "::notice title=CPU::${{ env.CPU_NAME }}"
         
     - name: 下载软件包
       id: package
