@@ -46,7 +46,7 @@ jobs:
     - name: 获取设置
       run: |
         cd ${GITHUB_WORKSPACE}
-
+        
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
         curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh
         if [[ $? -ne 0 ]]; then
