@@ -6,9 +6,12 @@ luci-app-mosdns
 luci-app-opkg
 luci-app-passwall
 luci-app-pushbot
+luci-app-quickstart
 luci-app-rebootschedule
+luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
+luci-app-store
 luci-app-ttyd
 luci-app-unblockneteasemusic
 luci-app-wechatpush
