@@ -187,9 +187,9 @@ jobs:
         
   delete-releases-artifacts:
     name: Delete releases artifacts
+    if: ${{ always() && github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id }} 
     needs: [build]
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id || ! github.event.sender.id
     steps:        
     - name: 清理Actions
       if: env.REPO_TOKEN
