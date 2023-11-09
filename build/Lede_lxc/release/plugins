@@ -4,13 +4,12 @@ luci-app-aliyundrive-webdav
 luci-app-argon-config
 luci-app-diskman
 luci-app-dockerman
-luci-app-eqosplus
 luci-app-filetransfer
 luci-app-firewall
 luci-app-mosdns
 luci-app-passwall
 luci-app-pushbot
-luci-app-qbittorrent
+luci-app-qbittorrent-simple
 luci-app-rebootschedule
 luci-app-shortcutmenu
 luci-app-smartdns
