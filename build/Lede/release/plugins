@@ -4,12 +4,12 @@ luci-app-aliyundrive-webdav
 luci-app-argon-config
 luci-app-autoupdate
 luci-app-diskman
+luci-app-dockerman
 luci-app-filetransfer
 luci-app-firewall
 luci-app-mosdns
 luci-app-passwall
 luci-app-pushbot
-luci-app-qbittorrent
 luci-app-rebootschedule
 luci-app-shortcutmenu
 luci-app-smartdns
@@ -17,8 +17,9 @@ luci-app-ssr-plus
 luci-app-store
 luci-app-ttyd
 luci-app-turboacc
-luci-app-unblockmusic
+luci-app-unblockneteasemusic
 luci-app-webadmin
 luci-app-wolplus
+luci-theme-Light
 luci-theme-argon
 luci-theme-bootstrap
