@@ -223,9 +223,9 @@ jobs:
           keep_minimum_runs: 0
           retain_days: 7
     
-    - name: 删除releases
+    - name: 删除Releases
       if: env.REPO_TOKEN
-      uses: roacn/delete-older-releases@master
+      uses: dev-drprasad/delete-older-releases@master
       with:
         repo: ${{ github.repository }}
         keep_latest: 7
