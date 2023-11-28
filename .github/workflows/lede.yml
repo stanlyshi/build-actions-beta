@@ -59,16 +59,6 @@ on:
           - 'fast'
           - 'normal'
           - 'false'
-      NOTICE_TYPE:
-        description: 'Telegram或pushplus信息通知'
-        required: true
-        default: 'default'
-        type: choice
-        options:
-          - 'default'
-          - 'Telegram'
-          - 'Pushplus'
-          - 'false'
       UPLOAD_CONFIG:
         description: '上传.config到 Github Artifacts'
         default: 'default'
@@ -153,7 +143,6 @@ jobs:
         export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"
         export INPUTS_BIOS_MODE="${{ github.event.inputs.BIOS_MODE }}"        
         export INPUTS_ENABLE_CCACHE="${{ github.event.inputs.ENABLE_CCACHE }}"
-        export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
         export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
         export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
