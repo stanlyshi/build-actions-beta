@@ -151,7 +151,7 @@ jobs:
         export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
         export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
-        export INPUTS_UPLOAD_UPLOAD_COWTRANSFER="${{ github.event.inputs.UPLOAD_COWTRANSFER }}"
+        export INPUTS_UPLOAD_COWTRANSFER="${{ github.event.inputs.UPLOAD_COWTRANSFER }}"
         export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
