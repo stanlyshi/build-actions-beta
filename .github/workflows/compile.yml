@@ -152,7 +152,7 @@ jobs:
         token: ${{ secrets.REPO_TOKEN }}
         allowUpdates: true
         removeArtifacts: true
-        body: ${{ env.RELEASE_MD }}
+        bodyFile: "${{ env.RELEASE_MD }}"
         artifacts: "${{ env.FIRMWARE_PATH }}/*"
         
     - name: 发布自动更新固件-固件
