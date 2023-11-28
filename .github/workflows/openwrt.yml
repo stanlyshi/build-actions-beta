@@ -74,25 +74,43 @@ on:
           - 'Telegram'
           - 'Pushplus'
           - 'false'
+      UPLOAD_CONFIG:
+        description: '上传.config到 Github Artifacts'
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'true'
+          - 'false'
+      UPLOAD_FIRMWARE:
+        description: '上传固件到 Github Artifacts'
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'true'
+          - 'false'
+      UPLOAD_RELEASE:
+        description: '发布固件到 Github Releases'
+        required: true
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'true'
+          - 'false'
+      UPLOAD_COWTRANSFER:
+        description: '上传固件到 奶牛快传'
+        default: 'default'
+        type: choice
+        options:
+          - 'default'
+          - 'true'
+          - 'false'
       ENABLE_SSH:
         description: '开启SSH远程配置'
         required: false
         default: false
-        type: boolean
-      UPLOAD_RELEASE:
-        description: '发布固件到 Github Releases'
-        required: false
-        default: false
-        type: boolean
-      UPLOAD_FIRMWARE:
-        description: '上传固件到 Github Artifacts'
-        required: false
-        default: true
-        type: boolean
-      UPLOAD_CONFIG:
-        description: '上传.config到 Github Artifacts'
-        required: false
-        default: true
         type: boolean
         
 # 定时触发开启开始编译(把下面两个#去掉开启,时间设置请看定时开启编译说明)
@@ -139,12 +157,13 @@ jobs:
         export INPUTS_CONFIG_FILE="${{ github.event.inputs.CONFIG_FILE }}"
         export INPUTS_FIRMWARE_TYPE="${{ github.event.inputs.FIRMWARE_TYPE }}"
         export INPUTS_BIOS_MODE="${{ github.event.inputs.BIOS_MODE }}"        
-        export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
-        export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
-        export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
-        export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
-        export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
         export INPUTS_ENABLE_CCACHE="${{ github.event.inputs.ENABLE_CCACHE }}"
+        export INPUTS_NOTICE_TYPE="${{ github.event.inputs.NOTICE_TYPE }}"
+        export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
+        export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
+        export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
+        export INPUTS_UPLOAD_UPLOAD_COWTRANSFER="${{ github.event.inputs.UPLOAD_COWTRANSFER }}"
+        export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
         curl -fsSL ${common_sh_url} -o ${GITHUB_WORKSPACE}/common.sh

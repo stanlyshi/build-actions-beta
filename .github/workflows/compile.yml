@@ -128,6 +128,12 @@ jobs:
       run: |
         source ${GITHUB_WORKSPACE}/common.sh && organize_firmware
         
+    - name: 上传固件至奶牛快传
+      continue-on-error: true
+      if: steps.compile.outcome == 'success' && env.UPLOAD_COWTRANSFER == 'true'
+      run: |
+        source ${GITHUB_WORKSPACE}/common.sh && upload_cowtransfer
+        
     - name: 上传固件至artifacts
       continue-on-error: true
       if: steps.compile.outcome == 'success' && env.UPLOAD_FIRMWARE == 'true'
@@ -135,7 +141,7 @@ jobs:
       with:
         name: ${{ env.SOURCE }}-${{ env.LUCI_EDITION }}-${{ env.KERNEL_PATCHVER }}-${{ env.TARGET_PROFILE }}-firmware-${{ env.COMPILE_DATE_HM }}
         path: ${{ env.FIRMWARE_PATH }}
-
+        
     - name: 发布固件
       continue-on-error: true
       if: steps.compile.outcome == 'success' && env.UPLOAD_RELEASE == 'true'
