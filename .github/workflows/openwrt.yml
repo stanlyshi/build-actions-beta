@@ -98,7 +98,7 @@ on:
           - 'true'
           - 'false'
       ENABLE_SSH:
-        description: '开启SSH远程配置'
+        description: '开启SSH远程配置.config'
         required: false
         default: false
         type: boolean
