@@ -86,15 +86,6 @@ on:
           - 'default'
           - 'true'
           - 'false'
-      UPLOAD_COWTRANSFER:
-        description: '上传固件到 奶牛快传'
-        required: false
-        default: 'default'
-        type: choice
-        options:
-          - 'default'
-          - 'true'
-          - 'false'
       ENABLE_SSH:
         description: '开启SSH远程配置.config'
         required: false
@@ -149,7 +140,6 @@ jobs:
         export INPUTS_UPLOAD_CONFIG="${{ github.event.inputs.UPLOAD_CONFIG }}"
         export INPUTS_UPLOAD_FIRMWARE="${{ github.event.inputs.UPLOAD_FIRMWARE }}"
         export INPUTS_UPLOAD_RELEASE="${{ github.event.inputs.UPLOAD_RELEASE }}"
-        export INPUTS_UPLOAD_COWTRANSFER="${{ github.event.inputs.UPLOAD_COWTRANSFER }}"
         export INPUTS_ENABLE_SSH="${{ github.event.inputs.ENABLE_SSH }}"
         
         common_sh_url="https://raw.githubusercontent.com/stanlyshi/common/main/common.sh"
