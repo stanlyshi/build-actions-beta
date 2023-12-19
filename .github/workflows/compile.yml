@@ -59,16 +59,6 @@ jobs:
       if: env.PUSH_PLUS_TOKEN && env.NOTICE_TYPE == 'PUSH' || env.TELEGRAM_CHAT_ID && env.TELEGRAM_BOT_TOKEN && env.NOTICE_TYPE == 'TG'
       run: |
         source $GITHUB_WORKSPACE/common.sh && notice_begin
-
-    - name: 释放磁盘空间
-      uses: jlumbroso/free-disk-space@main
-      with:
-        tool-cache: true
-        android: true
-        dotnet: true
-        haskell: true
-        large-packages: true
-        swap-storage: true
         
     - name: 部署编译环境
       env:
