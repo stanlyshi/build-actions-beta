@@ -1,9 +1,7 @@
-luci-app-adbyby-plus
 luci-app-advanced
 luci-app-alist
 luci-app-aliyundrive-webdav
 luci-app-argon-config
-luci-app-diskman
 luci-app-dockerman
 luci-app-filetransfer
 luci-app-firewall
@@ -15,7 +13,6 @@ luci-app-shortcutmenu
 luci-app-smartdns
 luci-app-ssr-plus
 luci-app-store
-luci-app-ttyd
 luci-app-unblockneteasemusic
 luci-app-webadmin
 luci-app-wolplus
